@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"Juego","l":"ConexionPostgreSQL"},{"p":"Juego","l":"Datos"},{"p":"Juego","l":"Uno"}];updateSearchResults();
