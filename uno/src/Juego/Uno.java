@@ -27,8 +27,8 @@ import javax.swing.JOptionPane;
 public class Uno extends javax.swing.JFrame implements MouseListener{
     
    
-    int CcartasA=7,CcartasB=7, CLabelInicial=CcartasA+CcartasB, CSobrantes=21;
-    JButton botonesA[]=new JButton[CcartasA];//Botones tablero1
+    int PlayerCardsA=7,CcartasB=7, CLabelInicial=PlayerCardsA+CcartasB, CSobrantes=21;
+    JButton botonesA[]=new JButton[PlayerCardsA];//Botones tablero1    //CcartasA
     JButton botonesB[]=new JButton[CcartasB];
     String CS[]=new String [CSobrantes];
     int RI[]=new int[36];
@@ -60,10 +60,10 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         add(jPanel1);
         nombre1=JOptionPane.showInputDialog("Jugador1 ingresa tu nombre");
         nombre2=JOptionPane.showInputDialog("Jugador2 ingresa tu nombre");
-        jPanel1.setLayout(new GridLayout(1,CcartasA));//Grid del Panel1
-        jPanel1.setSize(new Dimension((76*CcartasA),119));//Dimensión del panel1
-        jPanel2.setLayout(new GridLayout(1,CcartasB));//Grid del Panel1
-        jPanel2.setSize(new Dimension((76*CcartasB),119));//Dimensión del panel1k
+        jPanel1.setLayout(new GridLayout(1,PlayerCardsA));//Grid del Panel1
+        jPanel1.setSize(new Dimension((76*PlayerCardsA),119));//Dimensión del panel1
+        jPanel2.setLayout(new GridLayout(1,CcartasB));//Grid del Panel2
+        jPanel2.setSize(new Dimension((76*CcartasB),119));//Dimensión del panel2
         for(int i=0;i<botonesA.length;i++){
             botonesA[i]=new JButton();//Creando botones
             botonesA[i].setBounds(0,0,76,119);//Tamaño botonesA
@@ -492,7 +492,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     public void Iniciar() {
         jugador1=true; jugador2=false;
-        int k=7,CLabel=CcartasA+CcartasB+1;
+        int k=7,CLabel=PlayerCardsA+CcartasB+1;
         AleatoriosI();
         Cartas();
         imageL=new ImageIcon(cartass[RI[CLabelInicial]]);//Se le otorga la ruta del arreglo
