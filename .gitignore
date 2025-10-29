@@ -1,0 +1,8 @@
+# Ignorar archivos del entorno de desarrollo
+.classpath
+.metadata/
+.project
+.settings/
+
+# Ignorar archivos binarios
+bin/
