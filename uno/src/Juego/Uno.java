@@ -32,7 +32,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int RemainingCards=21;
     JButton botonesA[]=new JButton[PlayerCardsA];
     JButton botonesB[]=new JButton[PlayerCardsB];
-    String CS[]=new String [RemainingCards];
+    String RemainingDeck[]=new String [RemainingCards];
+    
     int RI[]=new int[36];
     int RC[]=new int[36];
     int j1=0, j2=0;
@@ -345,8 +346,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             if(botonesA[i].getIcon()==null){
                 System.out.println("Boton nulo");
                 botonesA[i].setEnabled(true);
-                image=new ImageIcon(CS[monto]);//Se le otorga la ruta del arreglo
-                botonesA[i].setName(CS[monto]);
+                image=new ImageIcon(RemainingDeck[monto]);//Se le otorga la ruta del arreglo
+                botonesA[i].setName(RemainingDeck[monto]);
                 img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
                 botonesA[i].setIcon(img);//Se añaden imagenes a los botones en posicion
                 monto++;
@@ -362,8 +363,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             if(botonesB[i].getIcon()==null){
                 System.out.println("Boton nulo");
                 botonesB[i].setEnabled(true);
-                image=new ImageIcon(CS[monto]);//Se le otorga la ruta del arreglo
-                botonesB[i].setName(CS[monto]);
+                image=new ImageIcon(RemainingDeck[monto]);//Se le otorga la ruta del arreglo
+                botonesB[i].setName(RemainingDeck[monto]);
                 img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
                 botonesB[i].setIcon(img);//Se añaden imagenes a los botones en posicion
                 monto++;
@@ -520,8 +521,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             k++;
         }
         
-        for(int i=0;i<CS.length;i++){
-            CS[i]=cartass[RI[CLabel]];
+        for(int i=0;i<RemainingDeck.length;i++){
+        	RemainingDeck[i]=cartass[RI[CLabel]];
             CLabel++;
         }
         jButton1.setEnabled(true);
