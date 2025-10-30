@@ -28,7 +28,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     /*Inicialización de varibles*/
     int PlayerCardsA = 7,PlayerCardsB = 7;
-    int CLabelInicial = PlayerCardsA + PlayerCardsB;
+    int IndexInitialLetter = PlayerCardsA + PlayerCardsB;
     int CSobrantes=21;
     JButton botonesA[]=new JButton[PlayerCardsA];
     JButton botonesB[]=new JButton[PlayerCardsB];
@@ -501,8 +501,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         int k=7,CLabel=PlayerCardsA+PlayerCardsB+1;
         AleatoriosI();
         Cartas();
-        imageL=new ImageIcon(cartass[RI[CLabelInicial]]);//Se le otorga la ruta del arreglo
-        jLabel1.setName(cartass[RI[CLabelInicial]]);
+        imageL=new ImageIcon(cartass[RI[IndexInitialLetter]]);//Se le otorga la ruta del arreglo
+        jLabel1.setName(cartass[RI[IndexInitialLetter]]);
         imgL=new ImageIcon(imageL.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
         jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
         jLabel2.setText("Inicia "+nombre1);
