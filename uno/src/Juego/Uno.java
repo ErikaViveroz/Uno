@@ -29,10 +29,10 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     /*Inicialización de varibles*/
     int PlayerCardsA = 7,PlayerCardsB = 7;
     int IndexInitialLetter = PlayerCardsA + PlayerCardsB;
-    int CSobrantes=21;
+    int RemainingCards=21;
     JButton botonesA[]=new JButton[PlayerCardsA];
     JButton botonesB[]=new JButton[PlayerCardsB];
-    String CS[]=new String [CSobrantes];
+    String CS[]=new String [RemainingCards];
     int RI[]=new int[36];
     int RC[]=new int[36];
     int j1=0, j2=0;
