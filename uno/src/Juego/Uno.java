@@ -516,7 +516,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         
         for(int i=0;i<CS.length;i++){
-            CS[i]=FullDeck[RI[CLabel]];
+        	FullDeck[i]=FullDeck[RI[CLabel]];
             CLabel++;
         }
         jButton1.setEnabled(true);
