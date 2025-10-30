@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Juego;
 
 import java.awt.Dimension;
@@ -36,7 +31,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int RI[]=new int[36];
     int RC[]=new int[36];
     int j1=0, j2=0;
-    String cartass[]=new String[36];
+    String FullDeck[]=new String[36];
     String nombre1, nombre2;
     String colores[]={"am", "az","ve","ro"};
     String numeros[]={"1","2","3","4","5","6","7","8","9"};
@@ -501,27 +496,27 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         int k=7,CLabel=PlayerCardsA+PlayerCardsB+1;
         AleatoriosI();
         Cartas();
-        imageL=new ImageIcon(cartass[RI[IndexInitialLetter]]);//Se le otorga la ruta del arreglo
-        jLabel1.setName(cartass[RI[IndexInitialLetter]]);
+        imageL=new ImageIcon(FullDeck[RI[IndexInitialLetter]]);//Se le otorga la ruta del arreglo
+        jLabel1.setName(FullDeck[RI[IndexInitialLetter]]);
         imgL=new ImageIcon(imageL.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
         jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
         jLabel2.setText("Inicia "+nombre1);
 
         for(int i=0;i<botonesA.length;i++){
-            image=new ImageIcon(cartass[RI[i]]);//Se le otorga la ruta del arreglo
-            botonesA[i].setName(cartass[RI[i]]);
+            image=new ImageIcon(FullDeck[RI[i]]);//Se le otorga la ruta del arreglo
+            botonesA[i].setName(FullDeck[RI[i]]);
             img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
             botonesA[i].setIcon(img);//Se añaden imagenes a los botones en posicion
             
-            image=new ImageIcon(cartass[RI[k]]);//Se le otorga la ruta del arreglo
-            botonesB[i].setName(cartass[RI[k]]);
+            image=new ImageIcon(FullDeck[RI[k]]);//Se le otorga la ruta del arreglo
+            botonesB[i].setName(FullDeck[RI[k]]);
             img=new ImageIcon(image.getImage().getScaledInstance(botonesB[i].getWidth(),botonesB[i].getHeight(),Image.SCALE_DEFAULT));
             botonesB[i].setIcon(img);//Se añaden imagenes a los botones en posicion
             k++;
         }
         
         for(int i=0;i<CS.length;i++){
-            CS[i]=cartass[RI[CLabel]];
+            CS[i]=FullDeck[RI[CLabel]];
             CLabel++;
         }
         jButton1.setEnabled(true);
@@ -541,11 +536,11 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
     }
     
-    public void Cartas(){//Se puede numeros con caracteres especiales? Ya vi que si porque es string
+    public void Cartas(){
         int x=0;
-            for(int j=0;j<colores.length;j++){//0
-                for(int k=0;k<numeros.length;k++){//hgh
-                    cartass[x]=ruta+colores[j]+numeros[k]+".jpg";
+            for(int j=0;j<colores.length;j++) {
+                for(int k=0;k<numeros.length;k++){
+                	FullDeck[x]=ruta+colores[j]+numeros[k]+".jpg";
                     x++;
                 }
             }
