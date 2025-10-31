@@ -41,7 +41,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     Icon img, imgL;
     ImageIcon image, imageL; 
     
-    boolean jugador1=true, jugador2=false;
+    boolean isPlayerOneTurn = true;
     
     /*String BD="jdbc:postgresql://127.0.0.1/Uno?";
         String user="postgres";
@@ -335,7 +335,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             jButton1.setEnabled(false);
             usedCards = 0;
         }
-        if(jugador1){
+        if(isPlayerOneTurn){
         while(card){
             if(botonesA[i].getIcon()==null){
                 botonesA[i].setEnabled(true);
@@ -350,7 +350,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
         }
         
-        if(jugador2){
+        if(!isPlayerOneTurn){
         while(card){
             if(botonesB[i].getIcon()==null){
                 botonesB[i].setEnabled(true);
@@ -368,15 +368,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//Paso
-        if(jugador1){
+        if(isPlayerOneTurn){
             jLabel2.setText("Va "+playerName2);
-            jugador1=false;
-            jugador2=true;
+            isPlayerOneTurn = !isPlayerOneTurn;
         }else{
-            if(jugador2){
+            if(!isPlayerOneTurn){
                 jLabel2.setText("Va "+playerName1);
-                jugador2=false;
-                jugador1=true;
+                isPlayerOneTurn = !isPlayerOneTurn;
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -488,8 +486,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     // End of variables declaration//GEN-END:variables
 
     public void Iniciar() {
-        jugador1=true; jugador2=false;
-        int k=7,CLabel=playerCardsA+playerCardsB+1;
+    	isPlayerOneTurn = true;
+        int k=7;
+        int CLabel = playerCardsA + playerCardsB + 1;
         AleatoriosI();
         Cartas();
         imageL=new ImageIcon(fullDeck[RI[indexInitialLetter]]);//Se le otorga la ruta del arreglo
@@ -544,7 +543,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-    if(jugador1){ 
+    if(isPlayerOneTurn){ 
         for(int i=0;i<botonesA.length;i++){
             if(e.getSource()==botonesA[i]){
                 if(verificaSiEsColor(botonesA[i])){
@@ -553,8 +552,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     ImagenLabel(botonesA[i].getName());
                     botonesA[i].setName(null);
                     jLabel2.setText("Va "+playerName2);
-                    jugador1=false;
-                    jugador2=true;
+                    isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador1();
                 }else if(verificaSiEsNumero(botonesA[i])){
                     botonesA[i].setIcon(null);
@@ -562,14 +560,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     ImagenLabel(botonesA[i].getName());
                     botonesA[i].setName(null);
                     jLabel2.setText("Va "+playerName2);
-                    jugador1=false;
-                    jugador2=true;
+                    isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador1();
                 }//Cartas especiales, si es un +4 se crea otra funcion?
             }
         }
     }
-    if(jugador2){
+    if(!isPlayerOneTurn){
         for(int i=0;i<botonesB.length;i++){
             if(e.getSource()==botonesB[i]){
                 if(verificaSiEsColor(botonesB[i])){
@@ -578,8 +575,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     ImagenLabel(botonesB[i].getName());
                     botonesB[i].setName(null);
                     jLabel2.setText("Va "+playerName1);
-                    jugador1=true;
-                    jugador2=false;
+                    isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador2();
                 }else if(verificaSiEsNumero(botonesB[i])){
                     botonesB[i].setIcon(null);
@@ -587,8 +583,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     ImagenLabel(botonesB[i].getName());
                     botonesB[i].setName(null);
                     jLabel2.setText("Va "+playerName1);
-                    jugador1=true;
-                    jugador2=false;
+                    isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador2();
                 }//Cartas especiales 
             }
