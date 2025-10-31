@@ -26,20 +26,21 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int indexInitialLetter = playerCardsA + playerCardsB;
     int remainingCards = 21;
     int usedCards = 0;
-    JButton botonesA[]=new JButton[playerCardsA];
-    JButton botonesB[]=new JButton[playerCardsB];
+    int RI[]=new int[36];
+    int RC[]=new int[36];
+    int j1=0, j2=0;
+    
+    JButton playerButtonsA []=new JButton[playerCardsA];
+    JButton playerButtonsB []=new JButton[playerCardsB];
+    
     String remainingDeck[]=new String [remainingCards];
     String colorsUno[] = {"am", "az","ve","ro"};
     String numbersUno[] = {"1","2","3","4","5","6","7","8","9"};
     String fullDeck[] = new String[36];
     String playerName1, playerName2;
-    
-    int RI[]=new int[36];
-    int RC[]=new int[36];
-    int j1=0, j2=0;
     String ruta = "cartas/";
     Icon img, imgL;
-    ImageIcon image, imageL; 
+    ImageIcon image, currentCard; 
     
     boolean isPlayerOneTurn = true;
     
@@ -66,15 +67,15 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         jPanel2.setSize(new Dimension((76*playerCardsB),119));
         
         
-        for(int i=0;i<botonesA.length;i++){
-            botonesA[i]=new JButton();//Creando botones
-            botonesA[i].setBounds(0,0,76,119);//Tamaño botonesA
-            botonesA[i].addMouseListener(this);
-            jPanel1.add(botonesA[i]);//Añadiendo al Panel los botonesA
-            botonesB[i]=new JButton();//Creando botones
-            botonesB[i].setBounds(0,0,76,119);//Tamaño botonesA
-            botonesB[i].addMouseListener(this);
-            jPanel2.add(botonesB[i]);//Añadiendo al Panel los botonesA
+        for(int i=0;i<playerButtonsA.length;i++){
+        	playerButtonsA[i]=new JButton();//Creando botones
+        	playerButtonsA[i].setBounds(0,0,76,119);//Tamaño botonesA
+        	playerButtonsA[i].addMouseListener(this);
+            jPanel1.add(playerButtonsA[i]);//Añadiendo al Panel los botonesA
+            playerButtonsB[i]=new JButton();//Creando botones
+            playerButtonsB[i].setBounds(0,0,76,119);//Tamaño botonesA
+            playerButtonsB[i].addMouseListener(this);
+            jPanel2.add(playerButtonsB[i]);//Añadiendo al Panel los botonesA
         }
         Iniciar();
         
@@ -337,12 +338,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         if(isPlayerOneTurn){
         while(card){
-            if(botonesA[i].getIcon()==null){
-                botonesA[i].setEnabled(true);
+            if(playerButtonsA[i].getIcon()==null){
+            	playerButtonsA[i].setEnabled(true);
                 image=new ImageIcon(remainingDeck[usedCards]);
-                botonesA[i].setName(remainingDeck[usedCards]);
-                img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
-                botonesA[i].setIcon(img);
+                playerButtonsA[i].setName(remainingDeck[usedCards]);
+                img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsA[i].getWidth(),playerButtonsA[i].getHeight(),Image.SCALE_DEFAULT));
+                playerButtonsA[i].setIcon(img);
                 usedCards++;
                 card = false;
             }
@@ -352,12 +353,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         
         if(!isPlayerOneTurn){
         while(card){
-            if(botonesB[i].getIcon()==null){
-                botonesB[i].setEnabled(true);
+            if(playerButtonsB[i].getIcon()==null){
+            	playerButtonsB[i].setEnabled(true);
                 image=new ImageIcon(remainingDeck[usedCards]);
-                botonesB[i].setName(remainingDeck[usedCards]);
-                img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
-                botonesB[i].setIcon(img);
+                playerButtonsB[i].setName(remainingDeck[usedCards]);
+                img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsB[i].getWidth(),playerButtonsB[i].getHeight(),Image.SCALE_DEFAULT));
+                playerButtonsB[i].setIcon(img);
                 usedCards++;
                 card=false;
             }
@@ -380,13 +381,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//Reiniciar
-    	/*Creo que igual se puede llamar a init, pero tmb funciona, revisar lo del monto*/
         jLabel1.setIcon(null);
-        for(int i=0;i<botonesA.length;i++){
-            botonesA[i].setIcon(null);
-            botonesB[i].setIcon(null);
-            botonesA[i].setEnabled(true);
-            botonesB[i].setEnabled(true);
+        for(int i=0;i<playerButtonsA.length;i++){
+        	playerButtonsA[i].setIcon(null);
+        	playerButtonsB[i].setIcon(null);
+        	playerButtonsA[i].setEnabled(true);
+        	playerButtonsB[i].setEnabled(true);
             
         }
         Iniciar();
@@ -400,12 +400,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     public void Ganador1(){//Las tarjetas no se van quemando?
         int c1=0;
-        for(int i=0;i<botonesA.length;i++){
-            if(botonesA[i].getIcon()==null){
+        for(int i=0;i<playerButtonsA.length;i++){
+            if(playerButtonsA[i].getIcon()==null){
                 c1++;
             }
         }
-        if(c1==botonesA.length){
+        if(c1==playerButtonsA.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador1: "+playerName1);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
             j1+=1520;
@@ -418,12 +418,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }   
     public void Ganador2(){
         int c2=0;
-        for(int i=0;i<botonesB.length;i++){
-            if(botonesB[i].getIcon()==null){
+        for(int i=0;i<playerButtonsB.length;i++){
+            if(playerButtonsB[i].getIcon()==null){
                 c2++;
             }
         }
-        if(c2==botonesB.length){
+        if(c2==playerButtonsB.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador2: "+playerName2);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
             j2+=1520;
@@ -491,22 +491,22 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         int CLabel = playerCardsA + playerCardsB + 1;
         AleatoriosI();
         Cartas();
-        imageL=new ImageIcon(fullDeck[RI[indexInitialLetter]]);//Se le otorga la ruta del arreglo
+        currentCard=new ImageIcon(fullDeck[RI[indexInitialLetter]]);
         jLabel1.setName(fullDeck[RI[indexInitialLetter]]);
-        imgL=new ImageIcon(imageL.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
+        imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
         jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
         jLabel2.setText("Inicia "+playerName1);
 
-        for(int i=0;i<botonesA.length;i++){
-            image=new ImageIcon(fullDeck[RI[i]]);//Se le otorga la ruta del arreglo
-            botonesA[i].setName(fullDeck[RI[i]]);
-            img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
-            botonesA[i].setIcon(img);//Se añaden imagenes a los botones en posicion
+        for(int i=0;i<playerButtonsA.length;i++){
+            image=new ImageIcon(fullDeck[RI[i]]);
+            playerButtonsA[i].setName(fullDeck[RI[i]]);
+            img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsA[i].getWidth(),playerButtonsA[i].getHeight(),Image.SCALE_DEFAULT));
+            playerButtonsA[i].setIcon(img);
             
-            image=new ImageIcon(fullDeck[RI[k]]);//Se le otorga la ruta del arreglo
-            botonesB[i].setName(fullDeck[RI[k]]);
-            img=new ImageIcon(image.getImage().getScaledInstance(botonesB[i].getWidth(),botonesB[i].getHeight(),Image.SCALE_DEFAULT));
-            botonesB[i].setIcon(img);//Se añaden imagenes a los botones en posicion
+            image=new ImageIcon(fullDeck[RI[k]]);
+            playerButtonsB[i].setName(fullDeck[RI[k]]);
+            img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsB[i].getWidth(),playerButtonsB[i].getHeight(),Image.SCALE_DEFAULT));
+            playerButtonsB[i].setIcon(img);
             k++;
         }
         
@@ -544,21 +544,21 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
     if(isPlayerOneTurn){ 
-        for(int i=0;i<botonesA.length;i++){
-            if(e.getSource()==botonesA[i]){
-                if(verificaSiEsColor(botonesA[i])){
-                    botonesA[i].setIcon(null);
-                    botonesA[i].setEnabled(false);
-                    ImagenLabel(botonesA[i].getName());
-                    botonesA[i].setName(null);
+        for(int i=0;i<playerButtonsA.length;i++){
+            if(e.getSource() == playerButtonsA[i]){
+                if(verificaSiEsColor(playerButtonsA[i])){
+                	playerButtonsA[i].setIcon(null);
+                	playerButtonsA[i].setEnabled(false);
+                    currentCard(playerButtonsA[i].getName());
+                    playerButtonsA[i].setName(null);
                     jLabel2.setText("Va "+playerName2);
                     isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador1();
-                }else if(verificaSiEsNumero(botonesA[i])){
-                    botonesA[i].setIcon(null);
-                    botonesA[i].setEnabled(false);
-                    ImagenLabel(botonesA[i].getName());
-                    botonesA[i].setName(null);
+                }else if(verificaSiEsNumero(playerButtonsA[i])){
+                	playerButtonsA[i].setIcon(null);
+                	playerButtonsA[i].setEnabled(false);
+                    currentCard(playerButtonsA[i].getName());
+                    playerButtonsA[i].setName(null);
                     jLabel2.setText("Va "+playerName2);
                     isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador1();
@@ -567,21 +567,21 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
     }
     if(!isPlayerOneTurn){
-        for(int i=0;i<botonesB.length;i++){
-            if(e.getSource()==botonesB[i]){
-                if(verificaSiEsColor(botonesB[i])){
-                    botonesB[i].setIcon(null);
-                    botonesB[i].setEnabled(false);
-                    ImagenLabel(botonesB[i].getName());
-                    botonesB[i].setName(null);
+        for(int i=0;i<playerButtonsB.length;i++){
+            if(e.getSource() == playerButtonsB[i]){
+                if(verificaSiEsColor(playerButtonsB[i])){
+                	playerButtonsB[i].setIcon(null);
+                	playerButtonsB[i].setEnabled(false);
+                    currentCard(playerButtonsB[i].getName());
+                    playerButtonsB[i].setName(null);
                     jLabel2.setText("Va "+playerName1);
                     isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador2();
-                }else if(verificaSiEsNumero(botonesB[i])){
-                    botonesB[i].setIcon(null);
-                    botonesB[i].setEnabled(false);
-                    ImagenLabel(botonesB[i].getName());
-                    botonesB[i].setName(null);
+                }else if(verificaSiEsNumero(playerButtonsB[i])){
+                	playerButtonsB[i].setIcon(null);
+                	playerButtonsB[i].setEnabled(false);
+                    currentCard(playerButtonsB[i].getName());
+                    playerButtonsB[i].setName(null);
                     jLabel2.setText("Va "+playerName1);
                     isPlayerOneTurn = !isPlayerOneTurn;
                     Ganador2();
@@ -593,11 +593,11 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     }
     
-    public void ImagenLabel(String nombre){
-        imageL=new ImageIcon(nombre);//Se le otorga la ruta del arreglo
+    public void currentCard(String nombre){
+    	currentCard=new ImageIcon(nombre);
         jLabel1.setName(nombre);
-        imgL=new ImageIcon(imageL.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
-        jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
+        imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
+        jLabel1.setIcon(imgL);
     }
     
     public boolean verificaSiEsColor(JButton boton){
