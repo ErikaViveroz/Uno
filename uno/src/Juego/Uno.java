@@ -33,7 +33,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int RC[]=new int[36];
     int j1=0, j2=0;
     String FullDeck[]=new String[36];
-    String nombre1, nombre2;
+    String PlayerName1, PlayerName2;
     String colores[]={"am", "az","ve","ro"};
     String numeros[]={"1","2","3","4","5","6","7","8","9"};
     String ruta = "cartas/";
@@ -56,8 +56,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         setSize(new Dimension(800,700));//Tamaño de la ventana
         add(jPanel2);
         add(jPanel1);
-        nombre1=JOptionPane.showInputDialog("Jugador1 ingresa tu nombre");
-        nombre2=JOptionPane.showInputDialog("Jugador2 ingresa tu nombre");
+        PlayerName1=JOptionPane.showInputDialog("Jugador1 ingresa tu nombre");
+        PlayerName2=JOptionPane.showInputDialog("Jugador2 ingresa tu nombre");
         
         /*Creación Grid y dimensiones*/
         jPanel1.setLayout(new GridLayout(1,PlayerCardsA));
@@ -374,12 +374,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//Paso
         if(jugador1){
-            jLabel2.setText("Va "+nombre2);
+            jLabel2.setText("Va "+PlayerName2);
             jugador1=false;
             jugador2=true;
         }else{
             if(jugador2){
-                jLabel2.setText("Va "+nombre1);
+                jLabel2.setText("Va "+PlayerName1);
                 jugador2=false;
                 jugador1=true;
             }
@@ -413,13 +413,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
         }
         if(c1==botonesA.length){
-            JOptionPane.showMessageDialog(null, "Gana el jugador1: "+nombre1);
+            JOptionPane.showMessageDialog(null, "Gana el jugador1: "+PlayerName1);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
             j1+=1520;
             jLabel4.setText("Puntuación: "+j1);
         }
         if(c1==6){
-            JOptionPane.showMessageDialog(null, "UNO "+nombre1);
+            JOptionPane.showMessageDialog(null, "UNO "+PlayerName1);
         }
           
     }   
@@ -431,13 +431,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
         }
         if(c2==botonesB.length){
-            JOptionPane.showMessageDialog(null, "Gana el jugador2: "+nombre2);
+            JOptionPane.showMessageDialog(null, "Gana el jugador2: "+PlayerName2);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
             j2+=1520;
             jLabel3.setText("Puntuación: "+j2);
         }
         if(c2==6){
-            JOptionPane.showMessageDialog(null, "UNO: "+nombre2);
+            JOptionPane.showMessageDialog(null, "UNO: "+PlayerName2);
         }
             
     }   
@@ -501,7 +501,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         jLabel1.setName(FullDeck[RI[IndexInitialLetter]]);
         imgL=new ImageIcon(imageL.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
         jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
-        jLabel2.setText("Inicia "+nombre1);
+        jLabel2.setText("Inicia "+PlayerName1);
 
         for(int i=0;i<botonesA.length;i++){
             image=new ImageIcon(FullDeck[RI[i]]);//Se le otorga la ruta del arreglo
@@ -517,7 +517,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         
         for(int i=0;i<RemainingDeck.length;i++){
-        	RemainingDeck[i]=RemainingDeck[RI[CLabel]];
+        	RemainingDeck[i]=FullDeck[RI[CLabel]];
             CLabel++;
         }
         jButton1.setEnabled(true);
@@ -557,7 +557,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesA[i].setEnabled(false);
                     ImagenLabel(botonesA[i].getName());
                     botonesA[i].setName(null);
-                    jLabel2.setText("Va "+nombre2);
+                    jLabel2.setText("Va "+PlayerName2);
                     jugador1=false;
                     jugador2=true;
                     Ganador1();
@@ -566,7 +566,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesA[i].setEnabled(false);
                     ImagenLabel(botonesA[i].getName());
                     botonesA[i].setName(null);
-                    jLabel2.setText("Va "+nombre2);
+                    jLabel2.setText("Va "+PlayerName2);
                     jugador1=false;
                     jugador2=true;
                     Ganador1();
@@ -582,7 +582,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesB[i].setEnabled(false);
                     ImagenLabel(botonesB[i].getName());
                     botonesB[i].setName(null);
-                    jLabel2.setText("Va "+nombre1);
+                    jLabel2.setText("Va "+PlayerName1);
                     jugador1=true;
                     jugador2=false;
                     Ganador2();
@@ -591,7 +591,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesB[i].setEnabled(false);
                     ImagenLabel(botonesB[i].getName());
                     botonesB[i].setName(null);
-                    jLabel2.setText("Va "+nombre1);
+                    jLabel2.setText("Va "+PlayerName1);
                     jugador1=true;
                     jugador2=false;
                     Ganador2();
