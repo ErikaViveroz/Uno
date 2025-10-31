@@ -28,14 +28,14 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     JButton botonesA[]=new JButton[playerCardsA];
     JButton botonesB[]=new JButton[playerCardsB];
     String remainingDeck[]=new String [remainingCards];
+    String colorsUno[]={"am", "az","ve","ro"};
+    String numbersUno[]={"1","2","3","4","5","6","7","8","9"};
+    String fullDeck[]=new String[36];
+    String playerName1, playerName2;
     
     int RI[]=new int[36];
     int RC[]=new int[36];
     int j1=0, j2=0;
-    String fullDeck[]=new String[36];
-    String playerName1, playerName2;
-    String colores[]={"am", "az","ve","ro"};//colorsUno
-    String numeros[]={"1","2","3","4","5","6","7","8","9"};
     String ruta = "cartas/";
     Icon img, imgL;
     ImageIcon image, imageL; 
@@ -539,9 +539,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     public void Cartas(){
         int x=0;
-            for(int j=0;j<colores.length;j++) {
-                for(int k=0;k<numeros.length;k++){
-                	fullDeck[x]=ruta+colores[j]+numeros[k]+".jpg";
+            for(int j=0;j<colorsUno.length;j++) {
+                for(int k=0;k<numbersUno.length;k++){
+                	fullDeck[x]=ruta+colorsUno[j]+numbersUno[k]+".jpg";
                     x++;
                 }
             }
@@ -615,38 +615,38 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         String Label=jLabel1.getName();
         String btn=boton.getName();
         String color="", colors="";
-        for(int i=0;i<numeros.length;i++){
-            busca=ruta+colores[0]+numeros[i]+".jpg";
+        for(int i=0;i<numbersUno.length;i++){
+            busca=ruta+colorsUno[0]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="am"; 
             }
-            busca=ruta+colores[1]+numeros[i]+".jpg";
+            busca=ruta+colorsUno[1]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="az"; 
             }
-            busca=ruta+colores[2]+numeros[i]+".jpg";
+            busca=ruta+colorsUno[2]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="ve"; 
             }
-            busca=ruta+colores[3]+numeros[i]+".jpg";
+            busca=ruta+colorsUno[3]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="ro"; 
             }
         }
-        for(int i=0;i<numeros.length;i++){
-            busca=ruta+colores[0]+numeros[i]+".jpg";
+        for(int i=0;i<numbersUno.length;i++){
+            busca=ruta+colorsUno[0]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="am"; 
             }
-            busca=ruta+colores[1]+numeros[i]+".jpg";
+            busca=ruta+colorsUno[1]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="az"; 
             }
-            busca=ruta+colores[2]+numeros[i]+".jpg";
+            busca=ruta+colorsUno[2]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="ve"; 
             }
-            busca=ruta+colores[3]+numeros[i]+".jpg";
+            busca=ruta+colorsUno[3]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="ro"; 
             }
@@ -658,82 +658,82 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         return false;
     }
     
-    public boolean verificaSiEsNumero(JButton boton){//Se puede reducir este código?
+    public boolean verificaSiEsNumero(JButton boton){
         String busca="", num="", nume="";
         String Label=jLabel1.getName();
         String btn=boton.getName();
-        for(int i=0;i<colores.length;i++){
-            busca=ruta+colores[i]+numeros[0]+".jpg";  
+        for(int i=0;i<colorsUno.length;i++){
+            busca=ruta+colorsUno[i]+numbersUno[0]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="1";
             }
-            busca=ruta+colores[i]+numeros[1]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[1]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="2";
             }
-            busca=ruta+colores[i]+numeros[2]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[2]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="3";
             }
-            busca=ruta+colores[i]+numeros[3]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[3]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="4";
             }
-            busca=ruta+colores[i]+numeros[4]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[4]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="5";
             }
-            busca=ruta+colores[i]+numeros[5]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[5]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="6";
             }
-            busca=ruta+colores[i]+numeros[6]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[6]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="7";
             }
-            busca=ruta+colores[i]+numeros[7]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[7]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="8";
             }
-            busca=ruta+colores[i]+numeros[8]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[8]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="9";
             }
         }
-        for(int i=0;i<colores.length;i++){
-            busca=ruta+colores[i]+numeros[0]+".jpg";  
+        for(int i=0;i<colorsUno.length;i++){
+            busca=ruta+colorsUno[i]+numbersUno[0]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="1";
             }
-            busca=ruta+colores[i]+numeros[1]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[1]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="2";
             }
-            busca=ruta+colores[i]+numeros[2]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[2]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="3";
             }
-            busca=ruta+colores[i]+numeros[3]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[3]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="4";
             }
-            busca=ruta+colores[i]+numeros[4]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[4]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="5";
             }
-            busca=ruta+colores[i]+numeros[5]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[5]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="6";
             }
-            busca=ruta+colores[i]+numeros[6]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[6]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="7";
             }
-            busca=ruta+colores[i]+numeros[7]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[7]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="8";
             }
-            busca=ruta+colores[i]+numeros[8]+".jpg";  
+            busca=ruta+colorsUno[i]+numbersUno[8]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="9";
             }
