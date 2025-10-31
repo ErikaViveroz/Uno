@@ -24,13 +24,14 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     /*Inicialización de varibles*/
     int playerCardsA = 7,playerCardsB = 7;
     int indexInitialLetter = playerCardsA + playerCardsB;
-    int remainingCards=21;
+    int remainingCards = 21;
+    int usedCards = 0;
     JButton botonesA[]=new JButton[playerCardsA];
     JButton botonesB[]=new JButton[playerCardsB];
     String remainingDeck[]=new String [remainingCards];
-    String colorsUno[]={"am", "az","ve","ro"};
-    String numbersUno[]={"1","2","3","4","5","6","7","8","9"};
-    String fullDeck[]=new String[36];
+    String colorsUno[] = {"am", "az","ve","ro"};
+    String numbersUno[] = {"1","2","3","4","5","6","7","8","9"};
+    String fullDeck[] = new String[36];
     String playerName1, playerName2;
     
     int RI[]=new int[36];
@@ -39,7 +40,6 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     String ruta = "cartas/";
     Icon img, imgL;
     ImageIcon image, imageL; 
-    int monto=0;
     
     boolean jugador1=true, jugador2=false;
     
@@ -327,27 +327,24 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//Agarrar 
-    	/*Falta que se no se pase de las 7 cartas que puede tener un jugador o bien tratar de hacer el layout más grande*/
         int i=0;
         boolean card=true;
-        if(monto==21){
+        if(usedCards == remainingCards){
             card=false;
             JOptionPane.showMessageDialog(null, "Ya no hay más imagenes en el monto");
             jButton1.setEnabled(false);
-            monto=0;
+            usedCards = 0;
         }
         if(jugador1){
         while(card){
             if(botonesA[i].getIcon()==null){
-                System.out.println("Boton nulo");
                 botonesA[i].setEnabled(true);
-                image=new ImageIcon(remainingDeck[monto]);//Se le otorga la ruta del arreglo
-                botonesA[i].setName(remainingDeck[monto]);
+                image=new ImageIcon(remainingDeck[usedCards]);
+                botonesA[i].setName(remainingDeck[usedCards]);
                 img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
-                botonesA[i].setIcon(img);//Se añaden imagenes a los botones en posicion
-                monto++;
-                System.out.println(monto);
-                card=false;
+                botonesA[i].setIcon(img);
+                usedCards++;
+                card = false;
             }
             i++;
             }
@@ -356,14 +353,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         if(jugador2){
         while(card){
             if(botonesB[i].getIcon()==null){
-                System.out.println("Boton nulo");
                 botonesB[i].setEnabled(true);
-                image=new ImageIcon(remainingDeck[monto]);//Se le otorga la ruta del arreglo
-                botonesB[i].setName(remainingDeck[monto]);
+                image=new ImageIcon(remainingDeck[usedCards]);
+                botonesB[i].setName(remainingDeck[usedCards]);
                 img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
-                botonesB[i].setIcon(img);//Se añaden imagenes a los botones en posicion
-                monto++;
-                System.out.println(monto);
+                botonesB[i].setIcon(img);
+                usedCards++;
                 card=false;
             }
             i++;
