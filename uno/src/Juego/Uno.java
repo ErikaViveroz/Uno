@@ -20,7 +20,19 @@ import javax.swing.JOptionPane;
  * @author Erika Viveroz
  */
 public class Uno extends javax.swing.JFrame implements MouseListener{
-    
+	
+	/*Inicialización de Componentes*/
+	private javax.swing.JButton jButtonDrawCard;
+    private javax.swing.JButton jButtonPassTurn;
+    private javax.swing.JButton jButtonRestart;
+    private javax.swing.JButton jButtonExit;
+    private javax.swing.JLabel jLabelCard;
+    private javax.swing.JLabel jLabelPlayer;
+    private javax.swing.JLabel jLabelPlayerScoreA;
+    private javax.swing.JLabel jLabelPlayerScoreB;
+    private javax.swing.JPanel jPanelPlayerA;
+    private javax.swing.JPanel jPanelPlayerB;
+	
     /*Inicialización de varibles*/
     int playerCardsA = 7,playerCardsB = 7;
     int indexInitialLetter = playerCardsA + playerCardsB;
@@ -28,11 +40,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int usedCards = 0;
     int RI[]=new int[36];
     int RC[]=new int[36];
-    int j1=0, j2=0;
-    
+    int playerScore1 = 0, playerScore2 = 0;
     JButton playerButtonsA []=new JButton[playerCardsA];
     JButton playerButtonsB []=new JButton[playerCardsB];
-    
     String remainingDeck[]=new String [remainingCards];
     String colorsUno[] = {"am", "az","ve","ro"};
     String numbersUno[] = {"1","2","3","4","5","6","7","8","9"};
@@ -40,10 +50,10 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     String playerName1, playerName2;
     String ruta = "cartas/";
     Icon img, imgL;
-    ImageIcon image, currentCard; 
-    
+    ImageIcon image, currentCard;  
     boolean isPlayerOneTurn = true;
     
+    /*Conexión con la base de datos*/
     /*String BD="jdbc:postgresql://127.0.0.1/Uno?";
         String user="postgres";
         String pass="Holas123";
@@ -54,33 +64,58 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     */
     public Uno() {
         initComponents();
-        setSize(new Dimension(800,700));//Tamaño de la ventana
-        add(jPanel2);
-        add(jPanel1);
+        setSize(new Dimension(800,700));
+        add(jPanelPlayerB);
+        add(jPanelPlayerA);
         playerName1=JOptionPane.showInputDialog("Jugador1 ingresa tu nombre");
         playerName2=JOptionPane.showInputDialog("Jugador2 ingresa tu nombre");
         
         /*Creación Grid y dimensiones*/
-        jPanel1.setLayout(new GridLayout(1,playerCardsA));
-        jPanel1.setSize(new Dimension((76*playerCardsA),119));
-        jPanel2.setLayout(new GridLayout(1,playerCardsB));
-        jPanel2.setSize(new Dimension((76*playerCardsB),119));
+        jPanelPlayerA.setLayout(new GridLayout(1,playerCardsA));
+        jPanelPlayerA.setSize(new Dimension((76*playerCardsA),119));
+        jPanelPlayerB.setLayout(new GridLayout(1,playerCardsB));
+        jPanelPlayerB.setSize(new Dimension((76*playerCardsB),119));
         
         
         for(int i=0;i<playerButtonsA.length;i++){
-        	playerButtonsA[i]=new JButton();//Creando botones
-        	playerButtonsA[i].setBounds(0,0,76,119);//Tamaño botonesA
+        	playerButtonsA[i]=new JButton();
+        	playerButtonsA[i].setBounds(0,0,76,119);
         	playerButtonsA[i].addMouseListener(this);
-            jPanel1.add(playerButtonsA[i]);//Añadiendo al Panel los botonesA
-            playerButtonsB[i]=new JButton();//Creando botones
-            playerButtonsB[i].setBounds(0,0,76,119);//Tamaño botonesA
+        	jPanelPlayerA.add(playerButtonsA[i]);
+            playerButtonsB[i]=new JButton();
+            playerButtonsB[i].setBounds(0,0,76,119);
             playerButtonsB[i].addMouseListener(this);
-            jPanel2.add(playerButtonsB[i]);//Añadiendo al Panel los botonesA
+            jPanelPlayerB.add(playerButtonsB[i]);
         }
-        Iniciar();
+        start();
         
     }
-
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Uno().setVisible(true);
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,23 +125,23 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+    	jPanelPlayerA = new javax.swing.JPanel();
+    	jLabelCard = new javax.swing.JLabel();
+        jPanelPlayerB = new javax.swing.JPanel();
+        jLabelPlayer = new javax.swing.JLabel();
+        jButtonDrawCard = new javax.swing.JButton();
+        jButtonPassTurn = new javax.swing.JButton();
+        jButtonRestart = new javax.swing.JButton();
+        jButtonExit = new javax.swing.JButton();
+        jLabelPlayerScoreA = new javax.swing.JLabel();
+        jLabelPlayerScoreB = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelPlayerA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanelPlayerA);
+        jPanelPlayerA.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 279, Short.MAX_VALUE)
@@ -116,12 +151,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             .addGap(0, 63, Short.MAX_VALUE)
         );
 
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabelCard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelPlayerB.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanelPlayerB);
+        jPanelPlayerB.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
@@ -131,40 +166,40 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             .addGap(0, 63, Short.MAX_VALUE)
         );
 
-        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 3, 18)); // NOI18N
-        jLabel2.setText("Inicia el jugador1");
+        jLabelPlayer.setFont(new java.awt.Font("Comic Sans MS", 3, 18)); // NOI18N
+        jLabelPlayer.setText("Inicia el jugador1");
 
-        jButton1.setText("Agarrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDrawCard.setText("Draw");
+        jButtonDrawCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonDrawCardActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Paso");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPassTurn.setText("Pass");
+        jButtonPassTurn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonPassTurnActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Reiniciar");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonRestart.setText("Restart");
+        jButtonRestart.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                jButtonRestartMouseClicked(evt);
             }
         });
 
-        jButton4.setText("Apagar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonExit.setText("Exit");
+        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonExitActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Puntuación: 0");
+        jLabelPlayerScoreA.setText("Puntuación: 0");
 
-        jLabel4.setText("Puntuación: 0");
+        jLabelPlayerScoreB.setText("Puntuación: 0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,168 +207,131 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(60, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(jLabelPlayer)
                 .addGap(53, 53, 53)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelCard, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonDrawCard)
+                    .addComponent(jButtonPassTurn))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButtonRestart)
+                    .addComponent(jButtonExit))
                 .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jPanelPlayerB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelPlayerA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabelPlayerScoreB, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelPlayerScoreA, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(138, 540, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelPlayerB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(137, 137, 137)
-                        .addComponent(jLabel3)
+                        .addComponent(jLabelPlayerScoreB)
                         .addGap(46, 46, 46)
-                        .addComponent(jLabel2))
+                        .addComponent(jLabelPlayer))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(171, 171, 171)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCard, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton1)
-                                    .addComponent(jButton3))
+                                    .addComponent(jButtonDrawCard)
+                                    .addComponent(jButtonRestart))
                                 .addGap(47, 47, 47)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
-                                    .addComponent(jButton4))))))
+                                    .addComponent(jButtonPassTurn)
+                                    .addComponent(jButtonExit))))))
                 .addGap(3, 3, 3)
-                .addComponent(jLabel4)
+                .addComponent(jLabelPlayerScoreA)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelPlayerA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void start() {
+    	isPlayerOneTurn = true;
+        int k=7;
+        int CLabel = playerCardsA + playerCardsB + 1;
+        generateRandoms();
+        manageCards();
+        currentCard=new ImageIcon(fullDeck[RI[indexInitialLetter]]);
+        jLabelCard.setName(fullDeck[RI[indexInitialLetter]]);
+        imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabelCard.getWidth(),jLabelCard.getHeight(),Image.SCALE_DEFAULT));
+        jLabelCard.setIcon(imgL);
+        
+        jLabelPlayer.setText("Inicia "+playerName1);
 
-    void Conexion(){
-        
-        Conexion();
-        try {
-            Connection conectar=DriverManager.getConnection(BD,user,pass);
-            sentencia=conectar.createStatement();
-            resultado=sentencia.executeQuery(consultasql);
+        for(int i=0;i<playerButtonsA.length;i++){
+            image=new ImageIcon(fullDeck[RI[i]]);
+            playerButtonsA[i].setName(fullDeck[RI[i]]);
+            img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsA[i].getWidth(),playerButtonsA[i].getHeight(),Image.SCALE_DEFAULT));
+            playerButtonsA[i].setIcon(img);
             
-            JOptionPane.showMessageDialog(null, "Conexión exitosa");
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error de conexión"+e);
+            image=new ImageIcon(fullDeck[RI[k]]);
+            playerButtonsB[i].setName(fullDeck[RI[k]]);
+            img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsB[i].getWidth(),playerButtonsB[i].getHeight(),Image.SCALE_DEFAULT));
+            playerButtonsB[i].setIcon(img);
+            k++;
         }
+        
+        for(int i=0;i<remainingDeck.length;i++){
+        	remainingDeck[i]=fullDeck[RI[CLabel]];
+            CLabel++;
+        }
+        jButtonDrawCard.setEnabled(true);
     }
     
-    void GuardarBD(){
-        try {
-            ArrayList<Datos> lista=new ArrayList<>();
-            Datos ob;
-            
-            while(resultado.next()){
-                ob=new Datos();
-                ob.setc(resultado.getInt("id_jugador"));
-                ob.setnombre(resultado.getString("nombre"));
-                ob.setpuntuacion(resultado.getInt("puntuacion"));
-                ob.setfecha(resultado.getString("fecha"));
-                
-                lista.add(ob);
+    public void generateRandoms(){ 
+        Random aleatorios=new Random();
+        int N[]=IntStream.range(0, 36).toArray();
+            for(int i=N.length;i>0;i--){
+                int posicion=aleatorios.nextInt(i);
+                int tmp=N[i-1];
+                N[i-1]=N[posicion];
+                N[posicion]=tmp;
             }
-            
-            int num=lista.size();
-            //txtCod.setText(Integer.toString(num+1));
-            
-        } 
-        catch (SQLException e) {
-           JOptionPane.showMessageDialog(null,"Tienes un error de no sé qué pitos");
-        }
-    }
-    void Guardar(){
-        try{
-            Datos obj = new Datos();
-            obj.c=Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu id"));
-            obj.nombre=JOptionPane.showInputDialog("Ingresa tu nombre");
-            obj.puntuacion=Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu puntuación"));
-            Calendar fecha= Calendar.getInstance();
-            int año=fecha.get(Calendar.YEAR);
-            int mes=fecha.get(Calendar.MONTH);
-            int dia=fecha.get(Calendar.DAY_OF_MONTH);
-            int hora=fecha.get(Calendar.HOUR_OF_DAY);
-            int min=fecha.get(Calendar.MINUTE);
-            String f=dia+"/"+mes+"/"+año+"   "+hora+":"+min;
-            obj.fecha=f;
-            String sentencia2= new String();
-            sentencia2="INSERT INTO Uno(id_jugador, nombre, puntuacion, fecha)";
-            sentencia2+=" VALUES("+obj.c+","+obj.nombre+","+obj.puntuacion+","+obj.fecha+")";
-            sentencia.execute(sentencia2);
-            System.out.println("guardado");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Tienes un error de no sé qué pitos2");
-        }
-        
-    }
-    
-    public void Consulta(){
-        Conexion();
-        
-        try{
-           ArrayList<Datos> lista=new ArrayList<>();
-           Datos ob;
-           while(resultado.next()){
-                ob=new Datos();
-                ob.setc(resultado.getInt("id_jugador"));
-                ob.setnombre(resultado.getString("nombre"));
-                ob.setpuntuacion(resultado.getInt("puntuacion"));
-                ob.setfecha(resultado.getString("fecha"));
-                
-                lista.add(ob);
+            for(int i=0;i<N.length;i++){
+                RI[i]=N[i];
             }
-           String[] datos;
-           for(Datos elem:lista){
-               datos=new String[4];
-               datos[0]=Integer.toString(elem.c);
-               datos[1]=elem.nombre;
-               datos[2]=Integer.toString(elem.puntuacion);
-               datos[3]=elem.fecha;
-               System.out.println(datos);
-           }
-           
-        }catch(Exception e){
-            
-        }
     }
     
+    public void manageCards(){
+        int x=0;
+            for(int j=0;j<colorsUno.length;j++) {
+                for(int k=0;k<numbersUno.length;k++){
+                	fullDeck[x]=ruta+colorsUno[j]+numbersUno[k]+".jpg";// se agregan al final las tarjetas especiales
+                    x++;
+                }
+            }
+    }
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//Agarrar 
+    private void jButtonDrawCardActionPerformed(java.awt.event.ActionEvent evt) {
         int i=0;
         boolean card=true;
         if(usedCards == remainingCards){
             card=false;
             JOptionPane.showMessageDialog(null, "Ya no hay más imagenes en el monto");
-            jButton1.setEnabled(false);
+            jButtonDrawCard.setEnabled(false);
             usedCards = 0;
         }
         if(isPlayerOneTurn){
@@ -368,20 +366,20 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         //RegeneraBotones();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//Paso
+    private void jButtonPassTurnActionPerformed(java.awt.event.ActionEvent evt) {
         if(isPlayerOneTurn){
-            jLabel2.setText("Va "+playerName2);
+        	jLabelPlayer.setText("Va "+playerName2);
             isPlayerOneTurn = !isPlayerOneTurn;
         }else{
             if(!isPlayerOneTurn){
-                jLabel2.setText("Va "+playerName1);
+            	jLabelPlayer.setText("Va "+playerName1);
                 isPlayerOneTurn = !isPlayerOneTurn;
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//Reiniciar
-        jLabel1.setIcon(null);
+    private void jButtonRestartMouseClicked(java.awt.event.MouseEvent evt) {
+    	jLabelCard.setIcon(null);
         for(int i=0;i<playerButtonsA.length;i++){
         	playerButtonsA[i].setIcon(null);
         	playerButtonsB[i].setIcon(null);
@@ -389,16 +387,16 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         	playerButtonsB[i].setEnabled(true);
             
         }
-        Iniciar();
+        start();
     }//GEN-LAST:event_jButton3MouseClicked
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//Apagar, checar la conexión con la BD
+    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//Checar la conexión con la BD
         GuardarBD();
         Guardar();
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    public void Ganador1(){//Las tarjetas no se van quemando?
+    public void winningPlayerA(){
         int c1=0;
         for(int i=0;i<playerButtonsA.length;i++){
             if(playerButtonsA[i].getIcon()==null){
@@ -408,15 +406,15 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         if(c1==playerButtonsA.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador1: "+playerName1);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
-            j1+=1520;
-            jLabel4.setText("Puntuación: "+j1);
+            playerScore1 +=1520;
+            jLabelPlayerScoreA.setText("Puntuación: "+playerScore1);
         }
         if(c1==6){
             JOptionPane.showMessageDialog(null, "UNO "+playerName1);
         }
           
     }   
-    public void Ganador2(){
+    public void winningPlayerB(){
         int c2=0;
         for(int i=0;i<playerButtonsB.length;i++){
             if(playerButtonsB[i].getIcon()==null){
@@ -426,8 +424,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         if(c2==playerButtonsB.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador2: "+playerName2);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
-            j2+=1520;
-            jLabel3.setText("Puntuación: "+j2);
+            playerScore2 +=1520;
+            jLabelPlayerScoreB.setText("Puntuación: "+playerScore2);
         }
         if(c2==6){
             JOptionPane.showMessageDialog(null, "UNO: "+playerName2);
@@ -435,157 +433,51 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             
     }   
     
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Uno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Uno().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    // End of variables declaration//GEN-END:variables
-
-    public void Iniciar() {
-    	isPlayerOneTurn = true;
-        int k=7;
-        int CLabel = playerCardsA + playerCardsB + 1;
-        AleatoriosI();
-        Cartas();
-        currentCard=new ImageIcon(fullDeck[RI[indexInitialLetter]]);
-        jLabel1.setName(fullDeck[RI[indexInitialLetter]]);
-        imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
-        jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
-        jLabel2.setText("Inicia "+playerName1);
-
-        for(int i=0;i<playerButtonsA.length;i++){
-            image=new ImageIcon(fullDeck[RI[i]]);
-            playerButtonsA[i].setName(fullDeck[RI[i]]);
-            img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsA[i].getWidth(),playerButtonsA[i].getHeight(),Image.SCALE_DEFAULT));
-            playerButtonsA[i].setIcon(img);
-            
-            image=new ImageIcon(fullDeck[RI[k]]);
-            playerButtonsB[i].setName(fullDeck[RI[k]]);
-            img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsB[i].getWidth(),playerButtonsB[i].getHeight(),Image.SCALE_DEFAULT));
-            playerButtonsB[i].setIcon(img);
-            k++;
-        }
-        
-        for(int i=0;i<remainingDeck.length;i++){
-        	remainingDeck[i]=fullDeck[RI[CLabel]];
-            CLabel++;
-        }
-        jButton1.setEnabled(true);
-    }
-    
-    public void AleatoriosI(){ //Deberían ser más con las cartas especiales
-        Random aleatorios=new Random();
-        int N[]=IntStream.range(0, 36).toArray();//este es para las imagenes de la tarjeta que cambia
-            for(int i=N.length;i>0;i--){
-                int posicion=aleatorios.nextInt(i);
-                int tmp=N[i-1];
-                N[i-1]=N[posicion];
-                N[posicion]=tmp;
-            }
-            for(int i=0;i<N.length;i++){
-                RI[i]=N[i];
-            }
-    }
-    
-    public void Cartas(){
-        int x=0;
-            for(int j=0;j<colorsUno.length;j++) {
-                for(int k=0;k<numbersUno.length;k++){
-                	fullDeck[x]=ruta+colorsUno[j]+numbersUno[k]+".jpg";
-                    x++;
-                }
-            }
-    }
-
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {//Evento para cada selección de tarjeta
     if(isPlayerOneTurn){ 
         for(int i=0;i<playerButtonsA.length;i++){
             if(e.getSource() == playerButtonsA[i]){
-                if(verificaSiEsColor(playerButtonsA[i])){
+                if(verifyColorMatch(playerButtonsA[i])){
                 	playerButtonsA[i].setIcon(null);
                 	playerButtonsA[i].setEnabled(false);
                     currentCard(playerButtonsA[i].getName());
                     playerButtonsA[i].setName(null);
-                    jLabel2.setText("Va "+playerName2);
+                    jLabelPlayer.setText("Va "+playerName2);
                     isPlayerOneTurn = !isPlayerOneTurn;
-                    Ganador1();
-                }else if(verificaSiEsNumero(playerButtonsA[i])){
+                    winningPlayerA();
+                }else if(verifyNumberMatch(playerButtonsA[i])){
                 	playerButtonsA[i].setIcon(null);
                 	playerButtonsA[i].setEnabled(false);
                     currentCard(playerButtonsA[i].getName());
                     playerButtonsA[i].setName(null);
-                    jLabel2.setText("Va "+playerName2);
+                    jLabelPlayer.setText("Va "+playerName2);
                     isPlayerOneTurn = !isPlayerOneTurn;
-                    Ganador1();
-                }//Cartas especiales, si es un +4 se crea otra funcion?
+                    winningPlayerA();
+                }
             }
         }
     }
     if(!isPlayerOneTurn){
         for(int i=0;i<playerButtonsB.length;i++){
             if(e.getSource() == playerButtonsB[i]){
-                if(verificaSiEsColor(playerButtonsB[i])){
+                if(verifyColorMatch(playerButtonsB[i])){
                 	playerButtonsB[i].setIcon(null);
                 	playerButtonsB[i].setEnabled(false);
                     currentCard(playerButtonsB[i].getName());
                     playerButtonsB[i].setName(null);
-                    jLabel2.setText("Va "+playerName1);
+                    jLabelPlayer.setText("Va "+playerName1);
                     isPlayerOneTurn = !isPlayerOneTurn;
-                    Ganador2();
-                }else if(verificaSiEsNumero(playerButtonsB[i])){
+                    winningPlayerB();
+                }else if(verifyNumberMatch(playerButtonsB[i])){
                 	playerButtonsB[i].setIcon(null);
                 	playerButtonsB[i].setEnabled(false);
                     currentCard(playerButtonsB[i].getName());
                     playerButtonsB[i].setName(null);
-                    jLabel2.setText("Va "+playerName1);
+                    jLabelPlayer.setText("Va "+playerName1);
                     isPlayerOneTurn = !isPlayerOneTurn;
-                    Ganador2();
-                }//Cartas especiales 
+                    winningPlayerB();
+                }
             }
         }
         
@@ -595,14 +487,14 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     public void currentCard(String nombre){
     	currentCard=new ImageIcon(nombre);
-        jLabel1.setName(nombre);
-        imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
-        jLabel1.setIcon(imgL);
+    	jLabelCard.setName(nombre);
+        imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabelCard.getWidth(),jLabelCard.getHeight(),Image.SCALE_DEFAULT));
+        jLabelCard.setIcon(imgL);
     }
     
-    public boolean verificaSiEsColor(JButton boton){
+    public boolean verifyColorMatch(JButton boton){
         String busca="";
-        String Label=jLabel1.getName();
+        String Label=jLabelCard.getName();
         String btn=boton.getName();
         String color="", colors="";
         for(int i=0;i<numbersUno.length;i++){
@@ -648,9 +540,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         return false;
     }
     
-    public boolean verificaSiEsNumero(JButton boton){
+    public boolean verifyNumberMatch(JButton boton){
         String busca="", num="", nume="";
-        String Label=jLabel1.getName();
+        String Label=jLabelCard.getName();
         String btn=boton.getName();
         for(int i=0;i<colorsUno.length;i++){
             busca=ruta+colorsUno[i]+numbersUno[0]+".jpg";  
@@ -745,6 +637,96 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {}
 
-    
+
+    void Conexion(){
+        
+        Conexion();
+        try {
+            Connection conectar=DriverManager.getConnection(BD,user,pass);
+            sentencia=conectar.createStatement();
+            resultado=sentencia.executeQuery(consultasql);
+            
+            JOptionPane.showMessageDialog(null, "Conexión exitosa");
+        } 
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error de conexión"+e);
+        }
+    }
+    void GuardarBD(){
+        try {
+            ArrayList<Datos> lista=new ArrayList<>();
+            Datos ob;
+            
+            while(resultado.next()){
+                ob=new Datos();
+                ob.setc(resultado.getInt("id_jugador"));
+                ob.setnombre(resultado.getString("nombre"));
+                ob.setpuntuacion(resultado.getInt("puntuacion"));
+                ob.setfecha(resultado.getString("fecha"));
+                
+                lista.add(ob);
+            }
+            
+            int num=lista.size();
+            //txtCod.setText(Integer.toString(num+1));
+            
+        } 
+        catch (SQLException e) {
+           JOptionPane.showMessageDialog(null,"Tienes un error de no sé qué pitos");
+        }
+    }
+    void Guardar(){
+        try{
+            Datos obj = new Datos();
+            obj.c=Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu id"));
+            obj.nombre=JOptionPane.showInputDialog("Ingresa tu nombre");
+            obj.puntuacion=Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu puntuación"));
+            Calendar fecha= Calendar.getInstance();
+            int año=fecha.get(Calendar.YEAR);
+            int mes=fecha.get(Calendar.MONTH);
+            int dia=fecha.get(Calendar.DAY_OF_MONTH);
+            int hora=fecha.get(Calendar.HOUR_OF_DAY);
+            int min=fecha.get(Calendar.MINUTE);
+            String f=dia+"/"+mes+"/"+año+"   "+hora+":"+min;
+            obj.fecha=f;
+            String sentencia2= new String();
+            sentencia2="INSERT INTO Uno(id_jugador, nombre, puntuacion, fecha)";
+            sentencia2+=" VALUES("+obj.c+","+obj.nombre+","+obj.puntuacion+","+obj.fecha+")";
+            sentencia.execute(sentencia2);
+            System.out.println("guardado");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Tienes un error de no sé qué pitos2");
+        }
+        
+    }
+    public void Consulta(){
+        Conexion();
+        
+        try{
+           ArrayList<Datos> lista=new ArrayList<>();
+           Datos ob;
+           while(resultado.next()){
+                ob=new Datos();
+                ob.setc(resultado.getInt("id_jugador"));
+                ob.setnombre(resultado.getString("nombre"));
+                ob.setpuntuacion(resultado.getInt("puntuacion"));
+                ob.setfecha(resultado.getString("fecha"));
+                
+                lista.add(ob);
+            }
+           String[] datos;
+           for(Datos elem:lista){
+               datos=new String[4];
+               datos[0]=Integer.toString(elem.c);
+               datos[1]=elem.nombre;
+               datos[2]=Integer.toString(elem.puntuacion);
+               datos[3]=elem.fecha;
+               System.out.println(datos);
+           }
+           
+        }catch(Exception e){
+            
+        }
+    }
     
 }
