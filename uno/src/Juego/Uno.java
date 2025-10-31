@@ -22,19 +22,19 @@ import javax.swing.JOptionPane;
 public class Uno extends javax.swing.JFrame implements MouseListener{
     
     /*Inicialización de varibles*/
-    int PlayerCardsA = 7,PlayerCardsB = 7;
-    int IndexInitialLetter = PlayerCardsA + PlayerCardsB;
-    int RemainingCards=21;
-    JButton botonesA[]=new JButton[PlayerCardsA];
-    JButton botonesB[]=new JButton[PlayerCardsB];
-    String RemainingDeck[]=new String [RemainingCards];
+    int playerCardsA = 7,playerCardsB = 7;
+    int indexInitialLetter = playerCardsA + playerCardsB;
+    int remainingCards=21;
+    JButton botonesA[]=new JButton[playerCardsA];
+    JButton botonesB[]=new JButton[playerCardsB];
+    String remainingDeck[]=new String [remainingCards];
     
     int RI[]=new int[36];
     int RC[]=new int[36];
     int j1=0, j2=0;
-    String FullDeck[]=new String[36];
-    String PlayerName1, PlayerName2;
-    String colores[]={"am", "az","ve","ro"};
+    String fullDeck[]=new String[36];
+    String playerName1, playerName2;
+    String colores[]={"am", "az","ve","ro"};//colorsUno
     String numeros[]={"1","2","3","4","5","6","7","8","9"};
     String ruta = "cartas/";
     Icon img, imgL;
@@ -56,14 +56,14 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         setSize(new Dimension(800,700));//Tamaño de la ventana
         add(jPanel2);
         add(jPanel1);
-        PlayerName1=JOptionPane.showInputDialog("Jugador1 ingresa tu nombre");
-        PlayerName2=JOptionPane.showInputDialog("Jugador2 ingresa tu nombre");
+        playerName1=JOptionPane.showInputDialog("Jugador1 ingresa tu nombre");
+        playerName2=JOptionPane.showInputDialog("Jugador2 ingresa tu nombre");
         
         /*Creación Grid y dimensiones*/
-        jPanel1.setLayout(new GridLayout(1,PlayerCardsA));
-        jPanel1.setSize(new Dimension((76*PlayerCardsA),119));
-        jPanel2.setLayout(new GridLayout(1,PlayerCardsB));
-        jPanel2.setSize(new Dimension((76*PlayerCardsB),119));
+        jPanel1.setLayout(new GridLayout(1,playerCardsA));
+        jPanel1.setSize(new Dimension((76*playerCardsA),119));
+        jPanel2.setLayout(new GridLayout(1,playerCardsB));
+        jPanel2.setSize(new Dimension((76*playerCardsB),119));
         
         
         for(int i=0;i<botonesA.length;i++){
@@ -341,8 +341,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             if(botonesA[i].getIcon()==null){
                 System.out.println("Boton nulo");
                 botonesA[i].setEnabled(true);
-                image=new ImageIcon(RemainingDeck[monto]);//Se le otorga la ruta del arreglo
-                botonesA[i].setName(RemainingDeck[monto]);
+                image=new ImageIcon(remainingDeck[monto]);//Se le otorga la ruta del arreglo
+                botonesA[i].setName(remainingDeck[monto]);
                 img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
                 botonesA[i].setIcon(img);//Se añaden imagenes a los botones en posicion
                 monto++;
@@ -358,8 +358,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             if(botonesB[i].getIcon()==null){
                 System.out.println("Boton nulo");
                 botonesB[i].setEnabled(true);
-                image=new ImageIcon(RemainingDeck[monto]);//Se le otorga la ruta del arreglo
-                botonesB[i].setName(RemainingDeck[monto]);
+                image=new ImageIcon(remainingDeck[monto]);//Se le otorga la ruta del arreglo
+                botonesB[i].setName(remainingDeck[monto]);
                 img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
                 botonesB[i].setIcon(img);//Se añaden imagenes a los botones en posicion
                 monto++;
@@ -374,12 +374,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//Paso
         if(jugador1){
-            jLabel2.setText("Va "+PlayerName2);
+            jLabel2.setText("Va "+playerName2);
             jugador1=false;
             jugador2=true;
         }else{
             if(jugador2){
-                jLabel2.setText("Va "+PlayerName1);
+                jLabel2.setText("Va "+playerName1);
                 jugador2=false;
                 jugador1=true;
             }
@@ -413,13 +413,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
         }
         if(c1==botonesA.length){
-            JOptionPane.showMessageDialog(null, "Gana el jugador1: "+PlayerName1);
+            JOptionPane.showMessageDialog(null, "Gana el jugador1: "+playerName1);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
             j1+=1520;
             jLabel4.setText("Puntuación: "+j1);
         }
         if(c1==6){
-            JOptionPane.showMessageDialog(null, "UNO "+PlayerName1);
+            JOptionPane.showMessageDialog(null, "UNO "+playerName1);
         }
           
     }   
@@ -431,13 +431,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
         }
         if(c2==botonesB.length){
-            JOptionPane.showMessageDialog(null, "Gana el jugador2: "+PlayerName2);
+            JOptionPane.showMessageDialog(null, "Gana el jugador2: "+playerName2);
             JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
             j2+=1520;
             jLabel3.setText("Puntuación: "+j2);
         }
         if(c2==6){
-            JOptionPane.showMessageDialog(null, "UNO: "+PlayerName2);
+            JOptionPane.showMessageDialog(null, "UNO: "+playerName2);
         }
             
     }   
@@ -494,30 +494,30 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     public void Iniciar() {
         jugador1=true; jugador2=false;
-        int k=7,CLabel=PlayerCardsA+PlayerCardsB+1;
+        int k=7,CLabel=playerCardsA+playerCardsB+1;
         AleatoriosI();
         Cartas();
-        imageL=new ImageIcon(FullDeck[RI[IndexInitialLetter]]);//Se le otorga la ruta del arreglo
-        jLabel1.setName(FullDeck[RI[IndexInitialLetter]]);
+        imageL=new ImageIcon(fullDeck[RI[indexInitialLetter]]);//Se le otorga la ruta del arreglo
+        jLabel1.setName(fullDeck[RI[indexInitialLetter]]);
         imgL=new ImageIcon(imageL.getImage().getScaledInstance(jLabel1.getWidth(),jLabel1.getHeight(),Image.SCALE_DEFAULT));
         jLabel1.setIcon(imgL);//Se añaden imagenes a los botones en posicion
-        jLabel2.setText("Inicia "+PlayerName1);
+        jLabel2.setText("Inicia "+playerName1);
 
         for(int i=0;i<botonesA.length;i++){
-            image=new ImageIcon(FullDeck[RI[i]]);//Se le otorga la ruta del arreglo
-            botonesA[i].setName(FullDeck[RI[i]]);
+            image=new ImageIcon(fullDeck[RI[i]]);//Se le otorga la ruta del arreglo
+            botonesA[i].setName(fullDeck[RI[i]]);
             img=new ImageIcon(image.getImage().getScaledInstance(botonesA[i].getWidth(),botonesA[i].getHeight(),Image.SCALE_DEFAULT));
             botonesA[i].setIcon(img);//Se añaden imagenes a los botones en posicion
             
-            image=new ImageIcon(FullDeck[RI[k]]);//Se le otorga la ruta del arreglo
-            botonesB[i].setName(FullDeck[RI[k]]);
+            image=new ImageIcon(fullDeck[RI[k]]);//Se le otorga la ruta del arreglo
+            botonesB[i].setName(fullDeck[RI[k]]);
             img=new ImageIcon(image.getImage().getScaledInstance(botonesB[i].getWidth(),botonesB[i].getHeight(),Image.SCALE_DEFAULT));
             botonesB[i].setIcon(img);//Se añaden imagenes a los botones en posicion
             k++;
         }
         
-        for(int i=0;i<RemainingDeck.length;i++){
-        	RemainingDeck[i]=FullDeck[RI[CLabel]];
+        for(int i=0;i<remainingDeck.length;i++){
+        	remainingDeck[i]=fullDeck[RI[CLabel]];
             CLabel++;
         }
         jButton1.setEnabled(true);
@@ -541,7 +541,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         int x=0;
             for(int j=0;j<colores.length;j++) {
                 for(int k=0;k<numeros.length;k++){
-                	FullDeck[x]=ruta+colores[j]+numeros[k]+".jpg";
+                	fullDeck[x]=ruta+colores[j]+numeros[k]+".jpg";
                     x++;
                 }
             }
@@ -557,7 +557,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesA[i].setEnabled(false);
                     ImagenLabel(botonesA[i].getName());
                     botonesA[i].setName(null);
-                    jLabel2.setText("Va "+PlayerName2);
+                    jLabel2.setText("Va "+playerName2);
                     jugador1=false;
                     jugador2=true;
                     Ganador1();
@@ -566,7 +566,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesA[i].setEnabled(false);
                     ImagenLabel(botonesA[i].getName());
                     botonesA[i].setName(null);
-                    jLabel2.setText("Va "+PlayerName2);
+                    jLabel2.setText("Va "+playerName2);
                     jugador1=false;
                     jugador2=true;
                     Ganador1();
@@ -582,7 +582,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesB[i].setEnabled(false);
                     ImagenLabel(botonesB[i].getName());
                     botonesB[i].setName(null);
-                    jLabel2.setText("Va "+PlayerName1);
+                    jLabel2.setText("Va "+playerName1);
                     jugador1=true;
                     jugador2=false;
                     Ganador2();
@@ -591,7 +591,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     botonesB[i].setEnabled(false);
                     ImagenLabel(botonesB[i].getName());
                     botonesB[i].setName(null);
-                    jLabel2.setText("Va "+PlayerName1);
+                    jLabel2.setText("Va "+playerName1);
                     jugador1=true;
                     jugador2=false;
                     Ganador2();
