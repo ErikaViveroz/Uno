@@ -319,6 +319,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public void manageCards(){
+    	/*Se asignan las cartas al mazo*/
         int x=0;
             for(int j=0;j<colorsUno.length;j++) {
                 for(int k=0;k<numbersUno.length;k++){
@@ -329,6 +330,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     private void jButtonDrawCardActionPerformed(java.awt.event.ActionEvent evt) {
+    	/*Lógica para tomar una carta del mazo*/
         int i=0;
         boolean card=true;
         if(usedCards == remainingCards){
@@ -370,6 +372,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonPassTurnActionPerformed(java.awt.event.ActionEvent evt) {
+    	/*Lógica para ceder el turno*/
         if(isPlayerOneTurn){
         	jLabelPlayer.setText("Va "+playerName2);
             isPlayerOneTurn = !isPlayerOneTurn;
@@ -400,6 +403,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton4ActionPerformed
 
     public void winningPlayerA(){
+    	/*Corrobora en cada movimiento si ha ganado el jugador1*/
         int c1=0;
         for(int i=0;i<playerButtonsA.length;i++){
             if(playerButtonsA[i].getIcon()==null){
@@ -418,6 +422,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
           
     }   
     public void winningPlayerB(){
+    	/*Corrobora en cada movimiento si ha ganado el jugador2*/
         int c2=0;
         for(int i=0;i<playerButtonsB.length;i++){
             if(playerButtonsB[i].getIcon()==null){
@@ -489,6 +494,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public void currentCard(String nombre){
+    	/*Cambio en la carta principal*/
     	currentCard=new ImageIcon(nombre);
     	jLabelCard.setName(nombre);
         imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabelCard.getWidth(),jLabelCard.getHeight(),Image.SCALE_DEFAULT));
@@ -496,6 +502,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public boolean verifyColorMatch(JButton boton){
+    	/*Valida si se puede agregar la tarjeta por el color*/
         String busca="";
         String Label=jLabelCard.getName();
         String btn=boton.getName();
@@ -544,6 +551,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public boolean verifyNumberMatch(JButton boton){
+    	/*Valida si se puede agregar la tarjeta por el numero*/
         String busca="", num="", nume="";
         String Label=jLabelCard.getName();
         String btn=boton.getName();
