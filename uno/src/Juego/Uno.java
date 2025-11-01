@@ -297,7 +297,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         
         for(int i=0;i<remainingDeck.length;i++){
-        	remainingDeck[i]=fullDeck[RI[CLabel]];
+        	remainingDeck[i]=fullDeck[index[CLabel]];
             CLabel++;
         }
         jButtonDrawCard.setEnabled(true);
@@ -314,7 +314,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                 N[j] = tmp;
             }
             for(int i=0;i<N.length;i++){
-                RI[i] = N[i];
+                index[i] = N[i];
             }
     }
     
@@ -412,7 +412,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         if(c1==playerButtonsA.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador1: "+playerName1);
-            JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
+            JOptionPane.showMessageDialog(null,"Apague o Reinicie el juego");
             playerScore1 +=1520;
             jLabelPlayerScoreA.setText("Puntuación: "+playerScore1);
         }
@@ -431,7 +431,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         if(c2==playerButtonsB.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador2: "+playerName2);
-            JOptionPane.showMessageDialog(null,"Apegue o Reinicie el juego");
+            JOptionPane.showMessageDialog(null,"Apague o Reinicie el juego");
             playerScore2 +=1520;
             jLabelPlayerScoreB.setText("Puntuación: "+playerScore2);
         }
