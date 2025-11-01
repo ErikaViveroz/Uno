@@ -39,7 +39,6 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int remainingCards = 21;
     int usedCards = 0;
     int RI[]=new int[36];
-    int RC[]=new int[36];
     int playerScore1 = 0, playerScore2 = 0;
     JButton playerButtonsA []=new JButton[playerCardsA];
     JButton playerButtonsB []=new JButton[playerCardsB];
@@ -48,7 +47,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     String numbersUno[] = {"1","2","3","4","5","6","7","8","9"};
     String fullDeck[] = new String[36];
     String playerName1, playerName2;
-    String ruta = "cartas/";
+    String route = "cartas/";
     Icon img, imgL;
     ImageIcon image, currentCard;  
     boolean isPlayerOneTurn = true;
@@ -75,7 +74,6 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         jPanelPlayerA.setSize(new Dimension((76*playerCardsA),119));
         jPanelPlayerB.setLayout(new GridLayout(1,playerCardsB));
         jPanelPlayerB.setSize(new Dimension((76*playerCardsB),119));
-        
         
         for(int i=0;i<playerButtonsA.length;i++){
         	playerButtonsA[i]=new JButton();
@@ -125,6 +123,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+    	/*Se crea toda la interfaz, botones, etiquetas, paneles y adentro los botones*/
     	jPanelPlayerA = new javax.swing.JPanel();
     	jLabelCard = new javax.swing.JLabel();
         jPanelPlayerB = new javax.swing.JPanel();
@@ -269,6 +268,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }// </editor-fold>//GEN-END:initComponents
     
     public void start() {
+    	/*Se generan los números aletorios para asignarlos a las cartas
+    	 * se asignan cartas al mazo restante, la carta inicial y las cartas de los jugadores */
+    	
     	isPlayerOneTurn = true;
         int k=7;
         int CLabel = playerCardsA + playerCardsB + 1;
@@ -302,30 +304,33 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public void generateRandoms(){ 
-        Random aleatorios=new Random();
-        int N[]=IntStream.range(0, 36).toArray();
-            for(int i=N.length;i>0;i--){
-                int posicion=aleatorios.nextInt(i);
-                int tmp=N[i-1];
-                N[i-1]=N[posicion];
-                N[posicion]=tmp;
+    	/*Se genera un arreglo con numeros aleatorios para reorganizar las cartas*/
+        Random random = new Random();
+        int N[] = IntStream.range(0, 36).toArray();
+            for(int i = N.length; i > 0; i--){
+                int j = random.nextInt(i);
+                int tmp = N[i-1];
+                N[i-1] = N[j];
+                N[j] = tmp;
             }
             for(int i=0;i<N.length;i++){
-                RI[i]=N[i];
+                RI[i] = N[i];
             }
     }
     
     public void manageCards(){
+    	/*Se asignan las cartas al mazo*/
         int x=0;
             for(int j=0;j<colorsUno.length;j++) {
                 for(int k=0;k<numbersUno.length;k++){
-                	fullDeck[x]=ruta+colorsUno[j]+numbersUno[k]+".jpg";// se agregan al final las tarjetas especiales
+                	fullDeck[x]=route+colorsUno[j]+numbersUno[k]+".jpg";// se agregan al final las tarjetas especiales
                     x++;
                 }
             }
     }
     
     private void jButtonDrawCardActionPerformed(java.awt.event.ActionEvent evt) {
+    	/*Lógica para tomar una carta del mazo*/
         int i=0;
         boolean card=true;
         if(usedCards == remainingCards){
@@ -367,6 +372,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonPassTurnActionPerformed(java.awt.event.ActionEvent evt) {
+    	/*Lógica para ceder el turno*/
         if(isPlayerOneTurn){
         	jLabelPlayer.setText("Va "+playerName2);
             isPlayerOneTurn = !isPlayerOneTurn;
@@ -397,6 +403,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton4ActionPerformed
 
     public void winningPlayerA(){
+    	/*Corrobora en cada movimiento si ha ganado el jugador1*/
         int c1=0;
         for(int i=0;i<playerButtonsA.length;i++){
             if(playerButtonsA[i].getIcon()==null){
@@ -415,6 +422,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
           
     }   
     public void winningPlayerB(){
+    	/*Corrobora en cada movimiento si ha ganado el jugador2*/
         int c2=0;
         for(int i=0;i<playerButtonsB.length;i++){
             if(playerButtonsB[i].getIcon()==null){
@@ -486,6 +494,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public void currentCard(String nombre){
+    	/*Cambio en la carta principal*/
     	currentCard=new ImageIcon(nombre);
     	jLabelCard.setName(nombre);
         imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabelCard.getWidth(),jLabelCard.getHeight(),Image.SCALE_DEFAULT));
@@ -493,42 +502,43 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public boolean verifyColorMatch(JButton boton){
+    	/*Valida si se puede agregar la tarjeta por el color*/
         String busca="";
         String Label=jLabelCard.getName();
         String btn=boton.getName();
         String color="", colors="";
         for(int i=0;i<numbersUno.length;i++){
-            busca=ruta+colorsUno[0]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[0]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="am"; 
             }
-            busca=ruta+colorsUno[1]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[1]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="az"; 
             }
-            busca=ruta+colorsUno[2]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[2]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="ve"; 
             }
-            busca=ruta+colorsUno[3]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[3]+numbersUno[i]+".jpg";
             if(btn.equalsIgnoreCase(busca)){
                 color="ro"; 
             }
         }
         for(int i=0;i<numbersUno.length;i++){
-            busca=ruta+colorsUno[0]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[0]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="am"; 
             }
-            busca=ruta+colorsUno[1]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[1]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="az"; 
             }
-            busca=ruta+colorsUno[2]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[2]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="ve"; 
             }
-            busca=ruta+colorsUno[3]+numbersUno[i]+".jpg";
+            busca=route+colorsUno[3]+numbersUno[i]+".jpg";
             if(Label.equalsIgnoreCase(busca)){
                 colors="ro"; 
             }
@@ -541,81 +551,82 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }
     
     public boolean verifyNumberMatch(JButton boton){
+    	/*Valida si se puede agregar la tarjeta por el numero*/
         String busca="", num="", nume="";
         String Label=jLabelCard.getName();
         String btn=boton.getName();
         for(int i=0;i<colorsUno.length;i++){
-            busca=ruta+colorsUno[i]+numbersUno[0]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[0]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="1";
             }
-            busca=ruta+colorsUno[i]+numbersUno[1]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[1]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="2";
             }
-            busca=ruta+colorsUno[i]+numbersUno[2]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[2]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="3";
             }
-            busca=ruta+colorsUno[i]+numbersUno[3]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[3]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="4";
             }
-            busca=ruta+colorsUno[i]+numbersUno[4]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[4]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="5";
             }
-            busca=ruta+colorsUno[i]+numbersUno[5]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[5]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="6";
             }
-            busca=ruta+colorsUno[i]+numbersUno[6]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[6]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="7";
             }
-            busca=ruta+colorsUno[i]+numbersUno[7]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[7]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="8";
             }
-            busca=ruta+colorsUno[i]+numbersUno[8]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[8]+".jpg";  
             if(btn.equalsIgnoreCase(busca)){
                 num="9";
             }
         }
         for(int i=0;i<colorsUno.length;i++){
-            busca=ruta+colorsUno[i]+numbersUno[0]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[0]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="1";
             }
-            busca=ruta+colorsUno[i]+numbersUno[1]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[1]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="2";
             }
-            busca=ruta+colorsUno[i]+numbersUno[2]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[2]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="3";
             }
-            busca=ruta+colorsUno[i]+numbersUno[3]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[3]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="4";
             }
-            busca=ruta+colorsUno[i]+numbersUno[4]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[4]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="5";
             }
-            busca=ruta+colorsUno[i]+numbersUno[5]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[5]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="6";
             }
-            busca=ruta+colorsUno[i]+numbersUno[6]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[6]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="7";
             }
-            busca=ruta+colorsUno[i]+numbersUno[7]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[7]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="8";
             }
-            busca=ruta+colorsUno[i]+numbersUno[8]+".jpg";  
+            busca=route+colorsUno[i]+numbersUno[8]+".jpg";  
             if(Label.equalsIgnoreCase(busca)){
                 nume="9";
             }
