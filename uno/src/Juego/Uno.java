@@ -38,7 +38,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     int indexInitialLetter = playerCardsA + playerCardsB;
     int remainingCards = 21;
     int usedCards = 0;
-    int RI[]=new int[36];
+    int index[]=new int[36];
     int playerScore1 = 0, playerScore2 = 0;
     JButton playerButtonsA []=new JButton[playerCardsA];
     JButton playerButtonsB []=new JButton[playerCardsB];
@@ -276,21 +276,21 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         int CLabel = playerCardsA + playerCardsB + 1;
         generateRandoms();
         manageCards();
-        currentCard=new ImageIcon(fullDeck[RI[indexInitialLetter]]);
-        jLabelCard.setName(fullDeck[RI[indexInitialLetter]]);
+        currentCard=new ImageIcon(fullDeck[index[indexInitialLetter]]);
+        jLabelCard.setName(fullDeck[index[indexInitialLetter]]);
         imgL=new ImageIcon(currentCard.getImage().getScaledInstance(jLabelCard.getWidth(),jLabelCard.getHeight(),Image.SCALE_DEFAULT));
         jLabelCard.setIcon(imgL);
         
         jLabelPlayer.setText("Inicia "+playerName1);
 
         for(int i=0;i<playerButtonsA.length;i++){
-            image=new ImageIcon(fullDeck[RI[i]]);
-            playerButtonsA[i].setName(fullDeck[RI[i]]);
+            image=new ImageIcon(fullDeck[index[i]]);
+            playerButtonsA[i].setName(fullDeck[index[i]]);
             img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsA[i].getWidth(),playerButtonsA[i].getHeight(),Image.SCALE_DEFAULT));
             playerButtonsA[i].setIcon(img);
             
-            image=new ImageIcon(fullDeck[RI[k]]);
-            playerButtonsB[i].setName(fullDeck[RI[k]]);
+            image=new ImageIcon(fullDeck[index[k]]);
+            playerButtonsB[i].setName(fullDeck[index[k]]);
             img=new ImageIcon(image.getImage().getScaledInstance(playerButtonsB[i].getWidth(),playerButtonsB[i].getHeight(),Image.SCALE_DEFAULT));
             playerButtonsB[i].setIcon(img);
             k++;
