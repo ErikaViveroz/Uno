@@ -446,7 +446,11 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     if(isPlayerOneTurn){ 
         for(int i=0;i<playerButtonsA.length;i++){
             if(e.getSource() == playerButtonsA[i]){
-                if(verifyColorMatch(playerButtonsA[i])){
+            	
+            	boolean colorValidate = verifyColorMatch(playerButtonsA[i]);
+            	boolean numberValidate = verifyNumberMatch(playerButtonsA[i]);
+            	
+                if(colorValidate || numberValidate){
                 	playerButtonsA[i].setIcon(null);
                 	playerButtonsA[i].setEnabled(false);
                     currentCard(playerButtonsA[i].getName());
@@ -454,14 +458,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     jLabelPlayer.setText("Va "+playerName2);
                     isPlayerOneTurn = !isPlayerOneTurn;
                     winningPlayerA();
-                }else if(verifyNumberMatch(playerButtonsA[i])){
-                	playerButtonsA[i].setIcon(null);
-                	playerButtonsA[i].setEnabled(false);
-                    currentCard(playerButtonsA[i].getName());
-                    playerButtonsA[i].setName(null);
-                    jLabelPlayer.setText("Va "+playerName2);
-                    isPlayerOneTurn = !isPlayerOneTurn;
-                    winningPlayerA();
+                } else {
+                	JOptionPane.showMessageDialog(null, "Movimiento inválido. No coincide el color ni el número.", 
+                            "Jugada no válida", JOptionPane.WARNING_MESSAGE);;
                 }
             }
         }
@@ -469,7 +468,11 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     if(!isPlayerOneTurn){
         for(int i=0;i<playerButtonsB.length;i++){
             if(e.getSource() == playerButtonsB[i]){
-                if(verifyColorMatch(playerButtonsB[i])){
+            	
+            	boolean colorValidate = verifyColorMatch(playerButtonsB[i]);
+            	boolean numberValidate = verifyNumberMatch(playerButtonsB[i]);
+            	
+                if(colorValidate || numberValidate){
                 	playerButtonsB[i].setIcon(null);
                 	playerButtonsB[i].setEnabled(false);
                     currentCard(playerButtonsB[i].getName());
@@ -477,14 +480,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     jLabelPlayer.setText("Va "+playerName1);
                     isPlayerOneTurn = !isPlayerOneTurn;
                     winningPlayerB();
-                }else if(verifyNumberMatch(playerButtonsB[i])){
-                	playerButtonsB[i].setIcon(null);
-                	playerButtonsB[i].setEnabled(false);
-                    currentCard(playerButtonsB[i].getName());
-                    playerButtonsB[i].setName(null);
-                    jLabelPlayer.setText("Va "+playerName1);
-                    isPlayerOneTurn = !isPlayerOneTurn;
-                    winningPlayerB();
+                } else {
+                	JOptionPane.showMessageDialog(null, "Movimiento inválido. No coincide el color ni el número.", 
+                            "Jugada no válida", JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
