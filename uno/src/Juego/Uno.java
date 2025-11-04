@@ -450,6 +450,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         for(int i=0;i<playerButtonsA.length;i++){
             if(e.getSource() == playerButtonsA[i]){
             	
+            	if (playerButtonsA[i].getName() == null) {
+                    JOptionPane.showMessageDialog(null,"Este botón no tiene una carta asignada.",
+                        "Carta no válida",JOptionPane.WARNING_MESSAGE
+                    );
+                    return; 
+                }
+            	
             	boolean colorValidate = verifyColorMatch(playerButtonsA[i]);
             	boolean numberValidate = verifyNumberMatch(playerButtonsA[i]);
             	
@@ -471,6 +478,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     if(!isPlayerOneTurn){
         for(int i=0;i<playerButtonsB.length;i++){
             if(e.getSource() == playerButtonsB[i]){
+            	
+            	if (playerButtonsB[i].getName() == null) {
+                    JOptionPane.showMessageDialog(null,"Este botón no tiene una carta asignada.",
+                        "Carta no válida",JOptionPane.WARNING_MESSAGE
+                    );
+                    return; 
+                }
             	
             	boolean colorValidate = verifyColorMatch(playerButtonsB[i]);
             	boolean numberValidate = verifyNumberMatch(playerButtonsB[i]);
