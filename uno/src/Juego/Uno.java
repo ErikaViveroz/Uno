@@ -344,6 +344,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         if(isPlayerOneTurn){
         while(card){
+        	if (i >= playerButtonsA.length) {
+                JOptionPane.showMessageDialog(null,"El jugador no puede tener más de 7 cartas.",
+                    "Límite alcanzado", JOptionPane.WARNING_MESSAGE
+                );
+                break; 
+            }
+        	
             if(playerButtonsA[i].getIcon()==null){
             	playerButtonsA[i].setEnabled(true);
                 image=new ImageIcon(remainingDeck[usedCards]);
@@ -359,7 +366,14 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         
         if(!isPlayerOneTurn){
         while(card){
-            if(playerButtonsB[i].getIcon()==null){
+        	if (i >= playerButtonsB.length) {
+                JOptionPane.showMessageDialog(null,"El jugador no puede tener más de 7 cartas.",
+                    "Límite alcanzado", JOptionPane.WARNING_MESSAGE
+                );
+                break; 
+            }
+        	
+        	if(playerButtonsB[i].getIcon()==null){
             	playerButtonsB[i].setEnabled(true);
                 image=new ImageIcon(remainingDeck[usedCards]);
                 playerButtonsB[i].setName(remainingDeck[usedCards]);
