@@ -320,6 +320,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     public void manageCards(){
     	/*Se asignan las cartas al mazo*/
+    	if (colorsUno == null || numbersUno == null) {
+            throw new IllegalStateException("No se pueden generar cartas: faltan colores o números.");
+        }
         int x=0;
             for(int j=0;j<colorsUno.length;j++) {
                 for(int k=0;k<numbersUno.length;k++){
