@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.util.Calendar;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -47,7 +48,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     String numbersUno[] = {"1","2","3","4","5","6","7","8","9"};
     String fullDeck[] = new String[36];
     String playerName1, playerName2;
-    String route = "cartas/";
+    String route = System.getProperty("user.dir") + File.separator + "cartas" + File.separator;
     Icon img, imgL;
     ImageIcon image, currentCard;  
     boolean isPlayerOneTurn = true;
