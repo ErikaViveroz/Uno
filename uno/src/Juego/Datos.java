@@ -11,44 +11,44 @@ package Juego;
  */
 public class Datos {
     
-    String nombre;
-    int c;
-    int puntuacion;
-    String fecha;
+    String name;
+    String date;
+    int id;
+    int score;
     
-    public Datos(String nombre, int c, int puntuacion, String fecha){
-        this.nombre=nombre;
-        this.c=c;
-        this.puntuacion=puntuacion;
-        this.fecha=fecha;
+    public Datos(String name, int id, int score, String date){
+        this.name = name;
+        this.id = id;
+        this.score = score;
+        this.date = date;
     }
 
     Datos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public void setnombre(String nombre){
-        this.nombre=nombre;
+    public void setName(String name){
+        this.name = name;
     }
-    public void setc(int c){
-        this.c=c;
+    public void setId(int id){
+        this.id = id;
     }
-    public void setpuntuacion(int puntuacion){
-        this.puntuacion=puntuacion;
+    public void setScore(int score){
+        this.score = score;
     }
-    public void setfecha(String fecha){
-        this.fecha=fecha;
+    public void setDate(String date){
+        this.date = date;
     }
-    public String getnombre(){
-        return this.nombre;
+    public String getName(){
+        return this.name;
     }
-    public int getc(){
-        return this.c;
+    public int getId(){
+        return this.id;
     }
-    public int getpuntuacion(){
-        return this.puntuacion;
+    public int getScore(){
+        return this.score;
     }
-    public String getfecha(){
-        return this.fecha;
+    public String getDate(){
+        return this.date;
     }
 }

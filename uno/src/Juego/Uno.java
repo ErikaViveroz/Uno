@@ -52,15 +52,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     ImageIcon image, currentCard;  
     boolean isPlayerOneTurn = true;
     
-    /*Conexión con la base de datos*/
-    /*String BD="jdbc:postgresql://127.0.0.1/Uno?";
-        String user="postgres";
-        String pass="Holas123";
-        Statement sentencia=null;
-        ResultSet resultado=null;
-        //String cadenaDriver="org.postgresql.Driver";
-        String consultasql="SELECT * FROM Uno";
-    */
+    
     public Uno() {
         initComponents();
         setSize(new Dimension(800,700));
@@ -414,8 +406,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//Checar la conexión con la BD
-        GuardarBD();
-        Guardar();
+        saveScore();
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -677,96 +668,28 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {}
 
+    void saveScore(){
+    	try {
+            ConexionPostgreSQL conexion = new ConexionPostgreSQL();
 
-    void Conexion(){
-        
-        Conexion();
-        try {
-            Connection conectar=DriverManager.getConnection(BD,user,pass);
-            sentencia=conectar.createStatement();
-            resultado=sentencia.executeQuery(consultasql);
-            
-            JOptionPane.showMessageDialog(null, "Conexión exitosa");
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error de conexión"+e);
-        }
-    }
-    void GuardarBD(){
-        try {
-            ArrayList<Datos> lista=new ArrayList<>();
-            Datos ob;
-            
-            while(resultado.next()){
-                ob=new Datos();
-                ob.setc(resultado.getInt("id_jugador"));
-                ob.setnombre(resultado.getString("nombre"));
-                ob.setpuntuacion(resultado.getInt("puntuacion"));
-                ob.setfecha(resultado.getString("fecha"));
-                
-                lista.add(ob);
-            }
-            
-            int num=lista.size();
-            //txtCod.setText(Integer.toString(num+1));
-            
-        } 
-        catch (SQLException e) {
-           JOptionPane.showMessageDialog(null,"Tienes un error de no sé qué pitos");
-        }
-    }
-    void Guardar(){
-        try{
-            Datos obj = new Datos();
-            obj.c=Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu id"));
-            obj.nombre=JOptionPane.showInputDialog("Ingresa tu nombre");
-            obj.puntuacion=Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu puntuación"));
-            Calendar fecha= Calendar.getInstance();
-            int año=fecha.get(Calendar.YEAR);
-            int mes=fecha.get(Calendar.MONTH);
-            int dia=fecha.get(Calendar.DAY_OF_MONTH);
-            int hora=fecha.get(Calendar.HOUR_OF_DAY);
-            int min=fecha.get(Calendar.MINUTE);
-            String f=dia+"/"+mes+"/"+año+"   "+hora+":"+min;
-            obj.fecha=f;
-            String sentencia2= new String();
-            sentencia2="INSERT INTO Uno(id_jugador, nombre, puntuacion, fecha)";
-            sentencia2+=" VALUES("+obj.c+","+obj.nombre+","+obj.puntuacion+","+obj.fecha+")";
-            sentencia.execute(sentencia2);
-            System.out.println("guardado");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,"Tienes un error de no sé qué pitos2");
+            int id = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu id"));
+            String name = JOptionPane.showInputDialog("Ingresa tu nombre");
+            int score = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu puntuación"));
+
+            Calendar date = Calendar.getInstance();
+            String d = String.format("%02d/%02d/%04d %02d:%02d",
+                    date.get(Calendar.DAY_OF_MONTH),
+                    date.get(Calendar.MONTH) + 1,
+                    date.get(Calendar.YEAR),
+                    date.get(Calendar.HOUR_OF_DAY),
+                    date.get(Calendar.MINUTE));
+
+            conexion.savePlayer(id, name, score, d);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "❌ Error: el ID o la puntuación no son válidos.");
         }
         
-    }
-    public void Consulta(){
-        Conexion();
-        
-        try{
-           ArrayList<Datos> lista=new ArrayList<>();
-           Datos ob;
-           while(resultado.next()){
-                ob=new Datos();
-                ob.setc(resultado.getInt("id_jugador"));
-                ob.setnombre(resultado.getString("nombre"));
-                ob.setpuntuacion(resultado.getInt("puntuacion"));
-                ob.setfecha(resultado.getString("fecha"));
-                
-                lista.add(ob);
-            }
-           String[] datos;
-           for(Datos elem:lista){
-               datos=new String[4];
-               datos[0]=Integer.toString(elem.c);
-               datos[1]=elem.nombre;
-               datos[2]=Integer.toString(elem.puntuacion);
-               datos[3]=elem.fecha;
-               System.out.println(datos);
-           }
-           
-        }catch(Exception e){
-            
-        }
     }
     
 }
