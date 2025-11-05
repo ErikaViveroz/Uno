@@ -306,6 +306,10 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                 N[i-1] = N[j];
                 N[j] = tmp;
             }
+            if (index.length < N.length) {
+                throw new IllegalStateException("El arreglo 'index' es más pequeño que la cantidad de números generados.");
+            }
+            
             for(int i=0;i<N.length;i++){
                 index[i] = N[i];
             }
@@ -319,6 +323,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         int x=0;
             for(int j=0;j<colorsUno.length;j++) {
                 for(int k=0;k<numbersUno.length;k++){
+                	if (x >= fullDeck.length) break;
                 	fullDeck[x]=route+colorsUno[j]+numbersUno[k]+".jpg";// se agregan al final las tarjetas especiales
                     x++;
                 }
