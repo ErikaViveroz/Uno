@@ -26,16 +26,16 @@ public class ConexionPostgreSQL {
     /**
      * Guarda los datos de un jugador en la tabla Uno.
      */
-    public void savePlayer(int id, String nombre, int puntuacion, String fecha) {
-        String sql = "INSERT INTO Uno(id_jugador, nombre, puntuacion, fecha) VALUES (?, ?, ?, ?)";
+    public void savePlayer(int id, String name, int score, String date) {
+        String sql = "INSERT INTO Uno(id_player, name, score, date) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
-            ps.setString(2, nombre);
-            ps.setInt(3, puntuacion);
-            ps.setString(4, fecha);
+            ps.setString(2, name);
+            ps.setInt(3, score);
+            ps.setString(4, date);
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "✅ Puntuación guardada correctamente en la BD");
@@ -51,7 +51,7 @@ public class ConexionPostgreSQL {
      */
     public List<Datos> viewPlayers() {
         List<Datos> lista = new ArrayList<>();
-        String sql = "SELECT id_jugador, nombre, puntuacion, fecha FROM Uno";
+        String sql = "SELECT id_player, name, score, date FROM Uno";
 
         try (Connection conn = conectar();
              Statement stmt = conn.createStatement();
@@ -59,10 +59,10 @@ public class ConexionPostgreSQL {
 
             while (rs.next()) {
                 Datos d = new Datos();
-                d.setId(rs.getInt("id_jugador"));
-                d.setName(rs.getString("nombre"));
-                d.setScore(rs.getInt("puntuacion"));
-                d.setDate(rs.getString("fecha"));
+                d.setId(rs.getInt("id_player"));
+                d.setName(rs.getString("name"));
+                d.setScore(rs.getInt("score"));
+                d.setDate(rs.getString("date"));
                 lista.add(d);
             }
 

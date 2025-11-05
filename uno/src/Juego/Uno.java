@@ -673,18 +673,18 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             ConexionPostgreSQL conexion = new ConexionPostgreSQL();
 
             int id = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu id"));
-            String nombre = JOptionPane.showInputDialog("Ingresa tu nombre");
-            int puntuacion = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu puntuación"));
+            String name = JOptionPane.showInputDialog("Ingresa tu nombre");
+            int score = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu puntuación"));
 
-            Calendar fecha = Calendar.getInstance();
-            String f = String.format("%02d/%02d/%04d %02d:%02d",
-                    fecha.get(Calendar.DAY_OF_MONTH),
-                    fecha.get(Calendar.MONTH) + 1,
-                    fecha.get(Calendar.YEAR),
-                    fecha.get(Calendar.HOUR_OF_DAY),
-                    fecha.get(Calendar.MINUTE));
+            Calendar date = Calendar.getInstance();
+            String d = String.format("%02d/%02d/%04d %02d:%02d",
+                    date.get(Calendar.DAY_OF_MONTH),
+                    date.get(Calendar.MONTH) + 1,
+                    date.get(Calendar.YEAR),
+                    date.get(Calendar.HOUR_OF_DAY),
+                    date.get(Calendar.MINUTE));
 
-            conexion.savePlayer(id, nombre, puntuacion, f);
+            conexion.savePlayer(id, name, score, d);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "❌ Error: el ID o la puntuación no son válidos.");
