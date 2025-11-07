@@ -264,7 +264,6 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                 .addComponent(jPanelPlayerA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jScrollPanel.setViewportView(jDataTable);
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
