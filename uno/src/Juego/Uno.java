@@ -135,7 +135,15 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     "Id player", "Name", "Score", "Date" 
                 }
             ));
+        jScrollPanel.setViewportView(jDataTable);
+        Dimension fixedSize = new Dimension(250, 100);
 
+        // 4. Asigna el tamaño fijo al JScrollPane
+        jScrollPanel.setPreferredSize(fixedSize);
+        jScrollPanel.setMinimumSize(fixedSize);
+        jScrollPanel.setMaximumSize(fixedSize);
+
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanelPlayerA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -218,6 +226,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonRestart)
                     .addComponent(jButtonExit))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                		.addComponent(jScrollPanel))
                 .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,8 +267,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                                 .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButtonPassTurn)
-                                    .addComponent(jButtonExit))))))
-                .addGap(0, 0, 0)
+                                    .addComponent(jButtonExit))
+                                .addComponent(jScrollPanel)))))
+                .addGap(10, 10, 10)
                 .addComponent(jLabelPlayerScoreA)
                 .addGap(0, 0, 0) 
                 .addComponent(jPanelPlayerA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
