@@ -7,7 +7,7 @@ package Juego;
 
 /**
  *
- * @author tree6
+ * @author erika
  */
 public class Datos {
     
@@ -24,7 +24,7 @@ public class Datos {
     }
 
     Datos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     public void setName(String name){

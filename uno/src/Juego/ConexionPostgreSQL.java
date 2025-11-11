@@ -8,13 +8,13 @@ import java.util.List;
 import javax.swing.*;
 /**
  *
- * @author tree6
+ * @author erika
  */
 public class ConexionPostgreSQL {
     
-	private static final String BD_URL = "jdbc:postgresql://localhost:5432/Uno";
-    private static final String USER = "postgres";
-    private static final String PASS = "Holas123";
+	private static final String BD_URL = "jdbc:mysql://localhost:3306/uno";
+    private static final String USER = "root";
+    private static final String PASS = "";
     
     /**
      * Abre una conexión con la base de datos PostgreSQL.
@@ -26,16 +26,15 @@ public class ConexionPostgreSQL {
     /**
      * Guarda los datos de un jugador en la tabla Uno.
      */
-    public void savePlayer(int id, String name, int score, String date) {
-        String sql = "INSERT INTO Uno(id_player, name, score, date) VALUES (?, ?, ?, ?)";
+    public void savePlayer(String name, int score, String date) {
+        String sql = "INSERT INTO Uno(name, score, date) VALUES (?, ?, ?)";
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id);
-            ps.setString(2, name);
-            ps.setInt(3, score);
-            ps.setString(4, date);
+            ps.setString(1, name);
+            ps.setInt(2, score);
+            ps.setString(3, date);
 
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "✅ Puntuación guardada correctamente en la BD");
@@ -51,7 +50,7 @@ public class ConexionPostgreSQL {
      */
     public List<Datos> viewPlayers() {
         List<Datos> lista = new ArrayList<>();
-        String sql = "SELECT id_player, name, score, date FROM Uno";
+        String sql = "SELECT id_player, name, score, date FROM Uno ORDER BY score DESC LIMIT 3";
 
         try (Connection conn = conectar();
              Statement stmt = conn.createStatement();
