@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.*;
 /**
  *
- * @author tree6
+ * @author erika
  */
 public class ConexionPostgreSQL {
     
@@ -50,7 +50,7 @@ public class ConexionPostgreSQL {
      */
     public List<Datos> viewPlayers() {
         List<Datos> lista = new ArrayList<>();
-        String sql = "SELECT id_player, name, score, date FROM Uno";
+        String sql = "SELECT id_player, name, score, date FROM Uno ORDER BY score DESC LIMIT 3";
 
         try (Connection conn = conectar();
              Statement stmt = conn.createStatement();
