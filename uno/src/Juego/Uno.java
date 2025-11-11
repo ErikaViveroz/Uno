@@ -1,5 +1,7 @@
 package Juego;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -10,6 +12,8 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.Random;
 import java.util.stream.IntStream;
+
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -693,16 +697,27 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         return false;
     }
     @Override
-    public void mousePressed(MouseEvent e) {}
+    public void mousePressed(MouseEvent e) {
+    	JButton btn = (JButton) e.getSource();
+        btn.setBorder(BorderFactory.createLineBorder(Color.GREEN, 4));
+    }
 
     @Override
     public void mouseReleased(MouseEvent e) {}
 
     @Override
-    public void mouseEntered(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {
+    	 JButton btn = (JButton) e.getSource();
+    	 btn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3)); 
+    	 btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+    }
 
     @Override
-    public void mouseExited(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {
+    	JButton btn = (JButton) e.getSource();
+        btn.setBorder(null); 
+        btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
 
     void saveScore() {
         try {
