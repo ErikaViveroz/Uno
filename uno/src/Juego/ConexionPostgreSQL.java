@@ -48,8 +48,8 @@ public class ConexionPostgreSQL {
     /**
      * Devuelve todos los jugadores registrados en la base de datos.
      */
-    public List<Datos> viewPlayers() {
-        List<Datos> lista = new ArrayList<>();
+    public List<Player> viewPlayers() {
+        List<Player> lista = new ArrayList<>();
         String sql = "SELECT id_player, name, score, date FROM Uno ORDER BY score DESC LIMIT 3";
 
         try (Connection conn = conectar();
@@ -57,7 +57,7 @@ public class ConexionPostgreSQL {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                Datos d = new Datos();
+                Player d = new Player();
                 d.setId(rs.getInt("id_player"));
                 d.setName(rs.getString("name"));
                 d.setScore(rs.getInt("score"));

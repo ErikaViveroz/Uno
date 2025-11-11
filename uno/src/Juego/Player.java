@@ -9,29 +9,25 @@ package Juego;
  *
  * @author erika
  */
-public class Datos {
+public class Player {
     
     String name;
     String date;
     int id;
     int score;
     
-    public Datos(String name, int id, int score, String date){
-        this.name = name;
-        this.id = id;
-        this.score = score;
-        this.date = date;
-    }
-
-    Datos() {
-        
+    public Player (){
+        this.name = "";
+        this.score = 0;
+        this.date = "";
     }
     
-    public void setName(String name){
-        this.name = name;
-    }
+
     public void setId(int id){
         this.id = id;
+    }
+    public void setName(String name){
+        this.name = name;
     }
     public void setScore(int score){
         this.score = score;
@@ -39,11 +35,13 @@ public class Datos {
     public void setDate(String date){
         this.date = date;
     }
-    public String getName(){
-        return this.name;
-    }
+    
+
     public int getId(){
         return this.id;
+    }
+    public String getName(){
+        return this.name;
     }
     public int getScore(){
         return this.score;
