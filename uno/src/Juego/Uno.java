@@ -752,7 +752,6 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             model.setColumnIdentifiers(new String[] {"Id player", "Name", "Score", "Date"});
             
             if (topPlayers.isEmpty()) {
-                // ✅ Mostrar una fila indicando que no hay datos
                 model.addRow(new Object[] {"-", "No hay jugadas guardadas", "-", "-"});
             } else {
             	for (Player d : topPlayers) {
