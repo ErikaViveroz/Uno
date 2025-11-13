@@ -381,7 +381,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             for(int j=0;j<colorsUno.length;j++) {
                 for(int k=0;k<numbersUno.length;k++){
                 	if (x >= fullDeck.length) break;
-                	fullDeck[x]=route+colorsUno[j]+numbersUno[k]+".jpg";// se agregan al final las tarjetas especiales
+                	fullDeck[x]=route+colorsUno[j]+numbersUno[k]+".jpg";
                     x++;
                 }
             }
