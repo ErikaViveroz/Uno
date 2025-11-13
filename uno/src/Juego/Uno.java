@@ -59,7 +59,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     Icon img, imgL;
     ImageIcon image, currentCard;  
     boolean isPlayerOneTurn = true;
-    Datos playerA, playerB;
+    Player playerA, playerB;
     
     
     public Uno() {
@@ -71,11 +71,11 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         add(jPanelPlayerA);
         playerName1 = validateName("Jugador 1");
         playerName2 = validateName("Jugador 1");
-        playerA = new Datos();
+        playerA = new Player();
         playerA.setName(playerName1);
         playerA.setScore(0); 
 
-        playerB = new Datos();
+        playerB = new Player();
         playerB.setName(playerName2);
         playerB.setScore(0);
 
@@ -730,7 +730,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     date.get(Calendar.YEAR));
 
             if (playerA.getScore() != playerB.getScore()) {
-                Datos win = (playerA.getScore() > playerB.getScore()) ? playerA : playerB;
+                Player win = (playerA.getScore() > playerB.getScore()) ? playerA : playerB;
 
                 conexion.savePlayer(win.getName(), win.getScore(), d);
                 JOptionPane.showMessageDialog(null, "🏆 " + win.getName() + " ha sido guardado con una puntuación de " + win.getScore());
@@ -746,16 +746,15 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     void viewList() {
         try {
             ConexionPostgreSQL conexion = new ConexionPostgreSQL();
-            List<Datos> topPlayers = conexion.viewPlayers();
+            List<Player> topPlayers = conexion.viewPlayers();
 
             DefaultTableModel model = new DefaultTableModel();
             model.setColumnIdentifiers(new String[] {"Id player", "Name", "Score", "Date"});
             
             if (topPlayers.isEmpty()) {
-                // ✅ Mostrar una fila indicando que no hay datos
                 model.addRow(new Object[] {"-", "No hay jugadas guardadas", "-", "-"});
             } else {
-            	for (Datos d : topPlayers) {
+            	for (Player d : topPlayers) {
                     model.addRow(new Object[] {
                         d.getId(),
                         d.getName(),
