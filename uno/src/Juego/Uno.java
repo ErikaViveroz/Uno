@@ -58,7 +58,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     String route = System.getProperty("user.dir") + File.separator + "cartas" + File.separator;
     Icon img, imgL;
     ImageIcon image, currentCard;  
-    boolean isPlayerOneTurn = true;
+    private Turn turn;
     Player playerA, playerB;
     
     
@@ -70,7 +70,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         add(jPanelPlayerB);
         add(jPanelPlayerA);
         playerName1 = validateName("Jugador 1");
-        playerName2 = validateName("Jugador 1");
+        playerName2 = validateName("Jugador 2");
         playerA = new Player();
         playerA.setName(playerName1);
         playerA.setScore(0); 
@@ -78,6 +78,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         playerB = new Player();
         playerB.setName(playerName2);
         playerB.setScore(0);
+        turn = new Turn(playerA, playerB);
 
         
         /*Creación Grid y dimensiones*/
@@ -320,7 +321,6 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     	/*Se generan los números aletorios para asignarlos a las cartas
     	 * se asignan cartas al mazo restante, la carta inicial y las cartas de los jugadores */
     	
-    	isPlayerOneTurn = true;
         int k=7;
         int CLabel = playerCardsA + playerCardsB + 1;
         generateRandoms();
@@ -399,11 +399,10 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             usedCards = 0;
         }
         
-        if(isPlayerOneTurn){
+        if(turn.getCurrentPlayer() == playerA)
         	drawCard(playerButtonsA, card);
-        } else {
+        else 
         	drawCard(playerButtonsB, card);
-        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -433,13 +432,12 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     private void jButtonPassTurnActionPerformed(java.awt.event.ActionEvent evt) {
     	/*Lógica para ceder el turno*/
-        if (isPlayerOneTurn) {
-        	jLabelPlayer.setText("Va " + playerName2);
-            isPlayerOneTurn = !isPlayerOneTurn;
-        } else {
-            jLabelPlayer.setText("Va " + playerName1);
-            isPlayerOneTurn = !isPlayerOneTurn;
-        }
+        if (turn.getCurrentPlayer() == playerA) 
+        	turn.shiftChange();
+        else 
+        	turn.shiftChange();
+        
+        jLabelPlayer.setText("Va " + turn.getCurrentPlayer().getName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButtonRestartMouseClicked(java.awt.event.MouseEvent evt) {
@@ -471,7 +469,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         if(c1==playerButtons.length){
             JOptionPane.showMessageDialog(null, "Gana el jugador: "+ playerName);
             JOptionPane.showMessageDialog(null,"Apague o Reinicie el juego");
-            if (!isPlayerOneTurn) 
+            if (turn.getCurrentPlayer() == playerB) 
                 playerA.setScore(playerA.getScore() + 1520);
             else 
                 playerB.setScore(playerB.getScore() + 1520);
@@ -491,7 +489,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     @Override
     public void mouseClicked(MouseEvent e) {//Evento para cada selección de tarjeta
-    if(isPlayerOneTurn){ 
+    if(turn.getCurrentPlayer() == playerA){ 
         for(int i=0;i<playerButtonsA.length;i++){
             if(e.getSource() == playerButtonsA[i]){
             	
@@ -511,7 +509,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     currentCard(playerButtonsA[i].getName());
                     playerButtonsA[i].setName(null);
                     jLabelPlayer.setText("Va " + playerB.getName());
-                    isPlayerOneTurn = !isPlayerOneTurn;
+                    turn.shiftChange();
                     winningPlayer(playerA.getName(), playerButtonsA);
                 } else {
                 	JOptionPane.showMessageDialog(null, "Movimiento inválido. No coincide el color ni el número.", 
@@ -519,8 +517,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                 }
             }
         }
-    }
-    if(!isPlayerOneTurn){
+    }else {
         for(int i=0;i<playerButtonsB.length;i++){
             if(e.getSource() == playerButtonsB[i]){
             	
@@ -540,7 +537,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     currentCard(playerButtonsB[i].getName());
                     playerButtonsB[i].setName(null);
                     jLabelPlayer.setText("Va " + playerA.getName());
-                    isPlayerOneTurn = !isPlayerOneTurn;
+                    turn.shiftChange();
                     winningPlayer(playerB.getName(), playerButtonsB);
                 } else {
                 	JOptionPane.showMessageDialog(null, "Movimiento inválido. No coincide el color ni el número.", 
