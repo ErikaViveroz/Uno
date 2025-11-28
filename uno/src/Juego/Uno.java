@@ -5,6 +5,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.Calendar;
 import java.util.List;
 import java.awt.event.MouseEvent;
@@ -66,7 +67,11 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         initComponents();
         viewList();
         
-        setSize(new Dimension(1000,600));
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = (int) screenSize.getWidth();
+        int screenHeight = (int) screenSize.getHeight();
+
+        setSize(screenWidth, screenHeight); 
         add(jPanelPlayerB);
         add(jPanelPlayerA);
         playerName1 = validateName("Jugador 1");
@@ -430,11 +435,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
 
     private void jButtonPassTurnActionPerformed(java.awt.event.ActionEvent evt) {
     	/*Lógica para ceder el turno*/
-        if (turn.getCurrentPlayer() == playerA) 
-        	turn.shiftChange();
-        else 
-        	turn.shiftChange();
-        
+        turn.shiftChange();
         jLabelPlayer.setText("Va " + turn.getCurrentPlayer().getName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -487,59 +488,37 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     
     @Override
     public void mouseClicked(MouseEvent e) {//Evento para cada selección de tarjeta
-    if(turn.getCurrentPlayer() == playerA){ 
-        for(int i=0;i<playerButtonsA.length;i++){
-            if(e.getSource() == playerButtonsA[i]){
-            	
-            	if (playerButtonsA[i].getName() == null) {
+	    if(turn.getCurrentPlayer() == playerA){ 
+	    	clickedCard(playerButtonsA, e);
+	    }else{
+	    	clickedCard(playerButtonsB, e);
+	    }
+    }
+    
+    public void clickedCard(JButton[] playerButtons, MouseEvent e) {
+    	for(int i=0;i<playerButtons.length;i++){
+            if(e.getSource() == playerButtons[i]){	
+            	if (playerButtons[i].getName() == null) {
             		message("⚠️ Este botón no tiene una carta asignada.");
                     return; 
                 }
             	
-            	boolean colorValidate = verifyColorMatch(playerButtonsA[i]);
-            	boolean numberValidate = verifyNumberMatch(playerButtonsA[i]);
+            	boolean colorValidate = verifyColorMatch(playerButtons[i]);
+            	boolean numberValidate = verifyNumberMatch(playerButtons[i]);
             	
                 if(colorValidate || numberValidate){
-                	playerButtonsA[i].setIcon(null);
-                	playerButtonsA[i].setEnabled(false);
-                    currentCard(playerButtonsA[i].getName());
-                    playerButtonsA[i].setName(null);
-                    jLabelPlayer.setText("Va " + playerB.getName());
+                	playerButtons[i].setIcon(null);
+                	playerButtons[i].setEnabled(false);
+                    currentCard(playerButtons[i].getName());
+                    playerButtons[i].setName(null);
                     turn.shiftChange();
-                    winningPlayer(playerA.getName(), playerButtonsA);
+                    jLabelPlayer.setText("Va " + turn.getCurrentPlayer().getName());
+                    winningPlayer(playerA.getName(), playerButtons);
                 } else {
                 	message("⚠️ Movimiento inválido. No coincide el color ni el número.");
                 }
             }
         }
-    }else {
-        for(int i=0;i<playerButtonsB.length;i++){
-            if(e.getSource() == playerButtonsB[i]){
-            	
-            	if (playerButtonsB[i].getName() == null) {
-                    message("⚠️ Este botón no tiene una carta asignada.");
-                    return; 
-                }
-            	
-            	boolean colorValidate = verifyColorMatch(playerButtonsB[i]);
-            	boolean numberValidate = verifyNumberMatch(playerButtonsB[i]);
-            	
-                if(colorValidate || numberValidate){
-                	playerButtonsB[i].setIcon(null);
-                	playerButtonsB[i].setEnabled(false);
-                    currentCard(playerButtonsB[i].getName());
-                    playerButtonsB[i].setName(null);
-                    jLabelPlayer.setText("Va " + playerA.getName());
-                    turn.shiftChange();
-                    winningPlayer(playerB.getName(), playerButtonsB);
-                } else {
-                	message("⚠️ Movimiento inválido. No coincide el color ni el número.");
-                }
-            }
-        }
-        
-    }
-    
     }
     
     public void currentCard(String nombre){

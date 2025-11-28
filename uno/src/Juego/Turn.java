@@ -13,7 +13,7 @@ public class Turn {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-
+    
     public void shiftChange() {
         Player temp = currentPlayer;
         currentPlayer = nextPlayer;
