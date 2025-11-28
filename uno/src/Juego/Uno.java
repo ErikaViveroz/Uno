@@ -308,9 +308,9 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         do {
             name = JOptionPane.showInputDialog(null, title + ", ingresa tu nombre:", "Nombre de jugador", JOptionPane.QUESTION_MESSAGE);
             if (name == null) {
-                JOptionPane.showMessageDialog(null, "⚠️ Debes ingresar un nombre para continuar.");
+                message("⚠️ Debes ingresar un nombre para continuar.");
             } else if (name.trim().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "⚠️ El nombre no puede estar vacío.");
+                message("⚠️ El nombre no puede estar vacío.");
                 name = null;
             }
         } while (name == null);
@@ -394,7 +394,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
     	
         if(usedCards == remainingCards){
             card=false;
-            JOptionPane.showMessageDialog(null, "Ya no hay más imagenes en el monto");
+            message("⚠️ Ya no hay más imagenes en el monto");
             jButtonDrawCard.setEnabled(false);
             usedCards = 0;
         }
@@ -411,9 +411,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         
     	while(card){
         	if (i >= playerButtons.length) {
-                JOptionPane.showMessageDialog(null,"El jugador no puede tener más de 7 cartas.",
-                    "Límite alcanzado", JOptionPane.WARNING_MESSAGE
-                );
+                message("⚠️ El jugador no puede tener más de 7 cartas.");
                 break; 
             }
         	
@@ -467,8 +465,8 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             }
         }
         if(c1==playerButtons.length){
-            JOptionPane.showMessageDialog(null, "Gana el jugador: "+ playerName);
-            JOptionPane.showMessageDialog(null,"Apague o Reinicie el juego");
+            message("Gana el jugador: "+ playerName);
+            message("Apague o Reinicie el juego");
             if (turn.getCurrentPlayer() == playerB) 
                 playerA.setScore(playerA.getScore() + 1520);
             else 
@@ -482,7 +480,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         }
         
         if(c1==6){
-            JOptionPane.showMessageDialog(null, "UNO " + playerName + "!");
+            message("UNO " + playerName + "!");
         }
           
     }    
@@ -494,9 +492,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             if(e.getSource() == playerButtonsA[i]){
             	
             	if (playerButtonsA[i].getName() == null) {
-                    JOptionPane.showMessageDialog(null,"Este botón no tiene una carta asignada.",
-                        "Carta no válida",JOptionPane.WARNING_MESSAGE
-                    );
+            		message("⚠️ Este botón no tiene una carta asignada.");
                     return; 
                 }
             	
@@ -512,8 +508,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     turn.shiftChange();
                     winningPlayer(playerA.getName(), playerButtonsA);
                 } else {
-                	JOptionPane.showMessageDialog(null, "Movimiento inválido. No coincide el color ni el número.", 
-                            "Jugada no válida", JOptionPane.WARNING_MESSAGE);;
+                	message("⚠️ Movimiento inválido. No coincide el color ni el número.");
                 }
             }
         }
@@ -522,9 +517,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             if(e.getSource() == playerButtonsB[i]){
             	
             	if (playerButtonsB[i].getName() == null) {
-                    JOptionPane.showMessageDialog(null,"Este botón no tiene una carta asignada.",
-                        "Carta no válida",JOptionPane.WARNING_MESSAGE
-                    );
+                    message("⚠️ Este botón no tiene una carta asignada.");
                     return; 
                 }
             	
@@ -540,8 +533,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                     turn.shiftChange();
                     winningPlayer(playerB.getName(), playerButtonsB);
                 } else {
-                	JOptionPane.showMessageDialog(null, "Movimiento inválido. No coincide el color ni el número.", 
-                            "Jugada no válida", JOptionPane.WARNING_MESSAGE);
+                	message("⚠️ Movimiento inválido. No coincide el color ni el número.");
                 }
             }
         }
@@ -715,6 +707,10 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
         btn.setBorder(null); 
         btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
+    
+    public void message(String ms) {
+    	JOptionPane.showMessageDialog(null, ms);
+    }
 
     void saveScore() {
         try {
@@ -730,13 +726,13 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
                 Player win = (playerA.getScore() > playerB.getScore()) ? playerA : playerB;
 
                 conexion.savePlayer(win.getName(), win.getScore(), d);
-                JOptionPane.showMessageDialog(null, "🏆 " + win.getName() + " ha sido guardado con una puntuación de " + win.getScore());
+                message("🏆 " + win.getName() + " ha sido guardado con una puntuación de " + win.getScore());
             } else {
-                JOptionPane.showMessageDialog(null, "⚠️ Empate, no se guardará ningún puntaje.");
+                message("⚠️ Empate, no se guardará ningún puntaje.");
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "❌ Error al guardar puntaje: " + e.getMessage());
+            message("❌ Error al guardar puntaje: " + e.getMessage());
         }
     }
     
@@ -764,7 +760,7 @@ public class Uno extends javax.swing.JFrame implements MouseListener{
             jDataTable.setModel(model);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "❌ Error al mostrar datos: " + e.getMessage());
+           message("❌ Error al mostrar datos: " + e.getMessage());
         }
     }
 
